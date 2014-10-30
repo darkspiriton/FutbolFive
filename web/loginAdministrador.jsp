@@ -1,13 +1,13 @@
 <%-- 
-    Document   : login
-    Created on : 06/09/2014, 03:17:48 PM
-    Author     : Cesar
+    Document   : loginAdministrador
+    Created on : 29/10/2014, 11:16:35 AM
+    Author     : Mari
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="futbol.five.com.bean.Usuario" %>    
 
-<jsp:useBean id="LOGIN_INVALIDO_CONTRASEÑA" class="java.lang.String" scope="session" />
+<jsp:useBean id="LOGIN_INVALIDO_ADMINISTRADOR" class="java.lang.String" scope="session" />
 
 <!DOCTYPE html>
 <html lang="es">
@@ -39,7 +39,7 @@
 
 	<nav>
 		<ul class="menu">
-		<li><a href="/FutbolFive/loginAdministrador.jsp">Administrador</a></li>	
+			<li><a href="/FutbolFive/index.jsp">Inicio</a></li>
 		</ul>
 	</nav>
 
@@ -48,23 +48,21 @@
 		<div class="main_content">
 
 			<div class="header">
-				<h5>Iniciar sesión</h5>
+				<h5>Iniciar sesión como Administrador</h5>
 			</div>
 
 			<div class="body">
 
-				<form action="LoginPrueba" method="post">
+				<form action="LoginAdministrador" method="post">
 				    
 				    <p><label for="usuario">Usuario</label><input placeholder="Ingrese su usuario" id="usuario" name="usuario" type="text" /></p>
-                    <p><label for="passw">Contraseña</label><input placeholder="Ingrese su contrase" id="passw" name="passw" type="password" /></p>
+                    <p><label for="passw">Contraseña</label><input placeholder="Ingrese su contraseña" id="passw" name="passw" type="password" /></p>
 				    <span class="boton"><input name="commit" type="submit" value="Iniciar sesión"></span>
  				 </form>
 
  			</div>
  			<div class="footer">
- 				<span class="error"><%= LOGIN_INVALIDO_CONTRASEÑA %></span>
- 				<a class="registro_link" href="/FutbolFive/registro.jsp">¿No tienes una cuenta? Registrate aqui</a>
- 				
+ 				<span class="error"><%= LOGIN_INVALIDO_ADMINISTRADOR %></span>
  			</div>
 		</div>	 
                 
@@ -75,3 +73,4 @@
 
 </body>
 </html>
+

@@ -13,6 +13,7 @@ package futbol.five.com.interfaz;
 public interface UsuarioIF {
     
     public boolean verificarUsuario(String usuario,String passw); 
+    public boolean verificarAdministrador(String usuario,String passw);
     public void registrarUsuario(String usuario,String nombre,String apellido,String email,String proveedor,String ntelefono,String pass1,String fecha);    
     public boolean verificarSuscripcion(String iduser);
     

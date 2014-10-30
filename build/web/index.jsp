@@ -39,7 +39,7 @@
 
 	<nav>
 		<ul class="menu">
-			
+		<li><a href="/FutbolFive/loginAdministrador.jsp">Administrador</a></li>	
 		</ul>
 	</nav>
 

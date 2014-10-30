@@ -278,5 +278,208 @@ public class CanchaDAO implements CanchaIF {
 		
 		return lpartidos;        
     }
+
+    @Override
+    public List mantenimientoFechaPartido() {
+                
+                List<Partido> lpartidos= new <Partido>ArrayList();
+                
+                ManejadorFechas diaAux = new ManejadorFechas();
+                String diaActual = diaAux.getFechaActual(); 
+                
+                ResultSet rs = null;
+                Connection con = null;
+                PreparedStatement pstmt1 = null;
+                
+                
+		String sql1 = "SELECT ORGANIZADOR,COD_CANCHA,COD_HORARIO,FECHA,COD_PAGO,LISTA_ESTANDAR,LISTA_SOLIDARIA FROM PARTIDO\n" +
+                              "WHERE ESTADO_PARTIDO=\"disponible\" AND FECHA<= ?\n" +
+                              "ORDER BY FECHA;";
+		
+                
+		try {
+			con = mysql.getConnection();
+                        
+			pstmt1 = con.prepareStatement(sql1);
+                        pstmt1.setString(1, diaActual);
+                        rs=pstmt1.executeQuery();			
+                        
+                        while(rs.next()){
+                            lpartidos.add(new Partido(rs.getString(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getInt(7)));                    
+                        }
+                        
+                        
+                        	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				
+				pstmt1.close();
+                                
+				con.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			
+		}
+
+        return lpartidos;
+    }
+
+    @Override
+    public List mantenimientoListaEPartido() {
+                List<Partido> lpartidos= new <Partido>ArrayList();
+
+                ResultSet rs = null;
+                Connection con = null;
+                PreparedStatement pstmt1 = null;
+                
+                
+		String sql1 = "SELECT COUNT(DLE.USER),P.ORGANIZADOR,P.COD_CANCHA,P.COD_HORARIO,P.FECHA,P.COD_PAGO,P.LISTA_ESTANDAR,P.LISTA_SOLIDARIA\n" +
+                              "FROM PARTIDO P\n" +
+                              "INNER JOIN LISTA_ESTANDAR LE ON P.LISTA_ESTANDAR=LE.COD_LISTA_E\n" +
+                              "INNER JOIN DETALLE_LISTA_ESTANDAR DLE ON LE.COD_LISTA_E=DLE.COD_LISTA_E\n" +
+                              "WHERE LE.ESTADO_LISTA_E=\"disponible\"\n" +
+                              "GROUP BY P.LISTA_ESTANDAR\n" +
+                              "HAVING COUNT(DLE.USER)>9;";
+		
+                
+		try {
+			con = mysql.getConnection();
+                        
+			pstmt1 = con.prepareStatement(sql1);
+                        rs=pstmt1.executeQuery();			
+                        
+                        while(rs.next()){
+                            lpartidos.add(new Partido(rs.getString(2),rs.getInt(3),rs.getInt(4),rs.getString(5),rs.getInt(6),rs.getInt(7),rs.getInt(8)));                    
+                        }
+                        
+                        
+                        	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				
+				pstmt1.close();
+                                
+				con.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			
+		}
+
+        return lpartidos;
+    }
+
+    @Override
+    public void actualizarEstadoCaducado(Partido partido) {
+               
+                Connection con = null;
+                PreparedStatement pstmt1 = null;
+                PreparedStatement pstmt2 = null;
+                PreparedStatement pstmt3 = null;
+                PreparedStatement pstmt4 = null;
+                               
+		String sql1 = "UPDATE PARTIDO SET ESTADO_PARTIDO=\"caducado\"\n" +
+                              "WHERE ORGANIZADOR=? and COD_CANCHA=? and COD_HORARIO=? and FECHA=?;";
+                String sql2 = "UPDATE PAGO SET ESTADO_PAGO=\"caducado\"\n" +
+                              "WHERE COD_PAGO=?;";
+                String sql3 = "UPDATE LISTA_ESTANDAR SET ESTADO_LISTA_E=\"caducado\"\n" +
+                               "WHERE COD_LISTA_E=?;";
+                String sql4 = "UPDATE LISTA_SOLIDARIA SET ESTADO_LISTA_S=\"caducado\"\n" +
+                              "WHERE COD_LISTA_S=?;";
+
+		try {
+			con = mysql.getConnection();
+                        
+			pstmt1 = con.prepareStatement(sql1);
+                        pstmt1.setString(1, partido.getOrganizador());
+                        pstmt1.setInt(2,partido.getCodCancha());
+                        pstmt1.setInt(3,partido.getCodHorario());
+                        pstmt1.setString(4, partido.getFecha());
+                        
+                        pstmt2 = con.prepareStatement(sql2);
+                        pstmt2.setInt(1, partido.getCodPago());
+                        
+                        pstmt3 = con.prepareStatement(sql3);
+                        pstmt3.setInt(1,partido.getListaE());
+                        
+                        pstmt4 = con.prepareStatement(sql4);
+                        pstmt4.setInt(1, partido.getListaS());
+                        
+                        pstmt1.executeUpdate();
+                        pstmt2.executeUpdate();
+                        pstmt3.executeUpdate();
+                        pstmt4.executeUpdate();
+                        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				
+				pstmt1.close();
+                                pstmt2.close();
+                                pstmt3.close();
+                                pstmt4.close();
+                                
+				con.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			
+		}
+
+        
+    }
+
+    @Override
+    public void actualizarEstadoLleno(Partido partido) {
+        Connection con = null;
+                PreparedStatement pstmt1 = null;
+                PreparedStatement pstmt2 = null;
+                
+                               
+		String sql1 = "UPDATE LISTA_ESTANDAR SET ESTADO_LISTA_E=\"lleno\" WHERE COD_LISTA_E=?;";
+                String sql2 = "UPDATE LISTA_SOLIDARIA SET ESTADO_LISTA_S=\"lleno\" WHERE COD_LISTA_S=?;";
+                
+		try {
+			con = mysql.getConnection();
+                        
+			pstmt1 = con.prepareStatement(sql1);
+                        pstmt1.setInt(1, partido.getListaE());
+                        
+                        
+                        pstmt2 = con.prepareStatement(sql2);
+                        pstmt2.setInt(1, partido.getListaS());
+                        
+                                           
+                        pstmt1.executeUpdate();
+                        pstmt2.executeUpdate();
+                       
+                        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				
+				pstmt1.close();
+                                pstmt2.close();
+                                
+                                
+				con.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			
+		}
+        
+    }
     
 }

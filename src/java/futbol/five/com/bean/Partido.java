@@ -66,7 +66,17 @@ public class Partido {
         this.listaS = listaS;
        
     }
-
+    
+    public Partido(String organizador, int codCancha, int codHorario,String fecha,int codPago,int listaE,int listaS){
+        this.organizador=organizador;
+        this.codCancha=codCancha;
+        this.codHorario=codHorario;
+        this.fecha=fecha;
+        this.codPago=codPago;
+        this.listaE=listaE;
+        this.listaS=listaS;
+    }
+    
     public String getOrganizador() {
         return organizador;
     }

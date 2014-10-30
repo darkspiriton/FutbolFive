@@ -20,6 +20,14 @@
         <servlet-name>ListarPartidos</servlet-name>
         <servlet-class>futbol.five.com.servlet.ListarPartidos</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoginAdministrador</servlet-name>
+        <servlet-class>futbol.five.com.servlet.LoginAdministrador</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Mantenimiento</servlet-name>
+        <servlet-class>futbol.five.com.servlet.Mantenimiento</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginPrueba</servlet-name>
         <url-pattern>/LoginPrueba</url-pattern>
@@ -39,6 +47,14 @@
     <servlet-mapping>
         <servlet-name>ListarPartidos</servlet-name>
         <url-pattern>/ListarPartidos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginAdministrador</servlet-name>
+        <url-pattern>/LoginAdministrador</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Mantenimiento</servlet-name>
+        <url-pattern>/Mantenimiento</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

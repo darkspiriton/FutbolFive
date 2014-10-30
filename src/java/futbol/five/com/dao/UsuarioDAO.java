@@ -120,5 +120,52 @@ public class UsuarioDAO implements UsuarioIF{
         
         return suscripcion;
     }
+
+    @Override
+    public boolean verificarAdministrador(String usuario, String passw) {
+        
+                String nickAux;
+		String sql = "SELECT * FROM ADMIN";
+		PreparedStatement pstmt = null;
+		Connection con = null;
+		ResultSet rs= null;
+		boolean existe=false;
+		con = mysql.getConnection();
+		usuario=usuario.toLowerCase();
+			
+		try {
+			
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			
+			while(rs.next()){
+				nickAux=rs.getString(1);
+				
+				if (usuario.equals(nickAux) && rs.getString(2).equals(encriptaEnMD5(passw))){					
+						existe=true;
+						break;				
+				} 
+				
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+				con.close();
+                               
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return existe; 
+    }
     
 }

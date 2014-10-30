@@ -19,5 +19,10 @@ public interface CanchaIF {
       public void registrarPartido(String idUser,int codCancha,int codHorario,boolean suscripcion,String date);
       public Partido getdetallePartido(String idUser,int codCancha,int codHorario,String fecha);
       public List getPartidosDisponibles(String dia,String hora,String fecha);
+      public List mantenimientoFechaPartido();
+      public List mantenimientoListaEPartido();
+      public void actualizarEstadoCaducado(Partido partido);
+      public void actualizarEstadoLleno(Partido partido);
+      
              
 }     
