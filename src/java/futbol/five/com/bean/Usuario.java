@@ -37,6 +37,15 @@ public class Usuario implements Serializable {
         this.nTelefono = nTelefono;
         this.proveedorT = proveedorT;
     }
+
+    public Usuario(String user, String nombre, String apellido, String correo, String nTelefono) {
+        this.user = user;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+        this.nTelefono = nTelefono;
+    }
+    
     
    
 

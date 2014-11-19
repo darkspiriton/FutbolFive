@@ -104,12 +104,13 @@ public class CanchaDAO implements CanchaIF {
                 PreparedStatement pstmt2 = null;
                 PreparedStatement pstmt3 = null;
                 PreparedStatement pstmt4 = null;
+                PreparedStatement pstmt5 = null;
                 
 		String sql1 = "INSERT INTO `futbolfive`.`pago` (`cod_pago`, `monto`, `comision`, `estado_pago`) VALUES (?,?,?,?);";
 		String sql2 = "INSERT INTO `futbolfive`.`lista_estandar` (`cod_lista_e`, `estado_lista_e`) VALUES (?,?);";
                 String sql3 = "INSERT INTO `futbolfive`.`lista_solidaria` (`cod_lista_s`, `estado_lista_s`) VALUES (?,?);";
                 String sql4 = "INSERT INTO `futbolfive`.`partido` (`organizador`, `cod_cancha`, `cod_horario`, `fecha`, `cod_pago`, `lista_estandar`, `lista_solidaria`, `estado_partido`,`fecha_inscripcion`) VALUES (?,?,?,?,?,?,?,?,?);";
-                
+                String sql5 = "INSERT INTO `futbolfive`.`detalle_lista_estandar` (`user`, `cod_lista_e`) VALUES (?, ?);";
 		try {
 			con = mysql.getConnection();
                         
@@ -117,6 +118,7 @@ public class CanchaDAO implements CanchaIF {
                         pstmt2 = con.prepareStatement(sql2);
                         pstmt3 = con.prepareStatement(sql3);
                         pstmt4 = con.prepareStatement(sql4);
+                        pstmt5 = con.prepareStatement(sql5);
                        
                         pstmt1.setInt(1,id);
                         pstmt1.setInt(2, montoPago);
@@ -139,10 +141,14 @@ public class CanchaDAO implements CanchaIF {
                         pstmt4.setString(8, estado);
                         pstmt4.setString(9, diaActual1);
                         
+                        pstmt5.setString(1,idUser);
+                        pstmt5.setInt(2, id);
+                        
 			pstmt1.executeUpdate();
                         pstmt2.executeUpdate();
                         pstmt3.executeUpdate();
                         pstmt4.executeUpdate();
+                        pstmt5.executeUpdate();
                         	
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -153,6 +159,7 @@ public class CanchaDAO implements CanchaIF {
                                 pstmt2.close();
                                 pstmt3.close();
                                 pstmt4.close();
+                                pstmt5.close();
 				con.close();
 			} catch (SQLException e) {
 				
@@ -316,7 +323,7 @@ public class CanchaDAO implements CanchaIF {
 			try {
 				
 				pstmt1.close();
-                                
+                                rs.close();
 				con.close();
 			} catch (SQLException e) {
 				
@@ -343,7 +350,7 @@ public class CanchaDAO implements CanchaIF {
                               "INNER JOIN DETALLE_LISTA_ESTANDAR DLE ON LE.COD_LISTA_E=DLE.COD_LISTA_E\n" +
                               "WHERE LE.ESTADO_LISTA_E=\"disponible\"\n" +
                               "GROUP BY P.LISTA_ESTANDAR\n" +
-                              "HAVING COUNT(DLE.USER)>9;";
+                              "HAVING COUNT(DLE.USER)>10;";
 		
                 
 		try {
@@ -364,7 +371,7 @@ public class CanchaDAO implements CanchaIF {
 			try {
 				
 				pstmt1.close();
-                                
+                                rs.close();
 				con.close();
 			} catch (SQLException e) {
 				
@@ -440,7 +447,7 @@ public class CanchaDAO implements CanchaIF {
 
     @Override
     public void actualizarEstadoLleno(Partido partido) {
-        Connection con = null;
+                Connection con = null;
                 PreparedStatement pstmt1 = null;
                 PreparedStatement pstmt2 = null;
                 
@@ -481,5 +488,554 @@ public class CanchaDAO implements CanchaIF {
 		}
         
     }
+
+    @Override
+    public List obtenerNumTL(int codL) {
+                List<String> lnumbers= new <String>ArrayList();
+
+                ResultSet rs1 = null;
+                ResultSet rs2 = null;
+                Connection con = null;
+                PreparedStatement pstmt1 = null;
+                PreparedStatement pstmt2 = null;
+                
+                
+		String sql1 = "SELECT TELEFONO FROM USUARIO\n" +
+                              "INNER JOIN DETALLE_LISTA_ESTANDAR DLE ON USUARIO.USER= DLE.USER\n" +
+                              "WHERE DLE.COD_LISTA_E=?;";
+                String sql2 = "SELECT TELEFONO FROM USUARIO\n" +
+                              "INNER JOIN DETALLE_LISTA_SOLIDARIA DLS ON USUARIO.USER= DLS.USER\n" +
+                              "WHERE DLS.COD_LISTA_S=?;";
+		
+                
+		try {
+			con = mysql.getConnection();
+                        
+			pstmt1 = con.prepareStatement(sql1);
+                        pstmt2 = con.prepareStatement(sql2);
+                        pstmt1.setInt(1, codL);
+                        pstmt2.setInt(1, codL);
+                        rs1=pstmt1.executeQuery();	
+                        rs2=pstmt2.executeQuery();
+                        
+                        while(rs1.next()){
+                            lnumbers.add(rs1.getString(1));                            
+                            while(rs2.next()){
+                                lnumbers.add(rs2.getString(1));
+                            }
+                            
+                        }
+                        
+                        
+                        	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				
+				pstmt1.close();
+                                pstmt2.close();
+                                rs1.close();
+                                rs2.close();
+				con.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			
+		}
+
+        return lnumbers;
+    }
+
+    @Override
+    public boolean verficarListaEstandar(int codE) {
+                Connection con = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+                boolean hayEspacio=false;
+                
+		String sql ="SELECT COUNT(USER) FROM DETALLE_LISTA_ESTANDAR WHERE COD_LISTA_E=?;";                
+		
+		try {
+			con = mysql.getConnection();
+			// preparo la sentencia sql
+			pstmt = con.prepareStatement(sql);
+			// si hay parametros para el sql lo seteo
+			
+			pstmt.setInt(1,codE);    
+                        
+                        // ejecuto la sentencia
+			rs = pstmt.executeQuery();
+			
+			// proceso el resultset
+                        while(rs.next()){
+                            int cantidad = rs.getInt(1);
+                            if(cantidad<=10){
+                                hayEspacio=true;
+                            }
+                        }
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return hayEspacio;
+    }
+
+    @Override
+    public boolean verficarListaSolidaria(int codS) {        
+                Connection con = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+                boolean hayEspacio=false;
+                
+		String sql ="SELECT COUNT(USER) FROM DETALLE_LISTA_SOLIDARIA WHERE COD_LISTA_S=?;";                
+		
+		try {
+			con = mysql.getConnection();
+			// preparo la sentencia sql
+			pstmt = con.prepareStatement(sql);
+			// si hay parametros para el sql lo seteo
+			
+			pstmt.setInt(1,codS);    
+                        
+                        // ejecuto la sentencia
+			rs = pstmt.executeQuery();
+			
+			// proceso el resultset
+                        while(rs.next()){
+                            int cantidad = rs.getInt(1);
+                            if(cantidad<=10){
+                                hayEspacio=true;
+                            }
+                        }
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return hayEspacio;
+    }
+
+    @Override
+    public void insertarListaEstandar(String idUser, int codE) {
+        
+                Connection con = null;
+                PreparedStatement pstmt1 = null;                
+                               
+		String sql1 = "INSERT INTO `futbolfive`.`detalle_lista_estandar` (`user`, `cod_lista_e`) VALUES (?, ?);";                
+                
+		try {
+			con = mysql.getConnection();
+                        
+			pstmt1 = con.prepareStatement(sql1);   
+                        pstmt1.setString(1, idUser);
+                        pstmt1.setInt(2, codE);
+                    
+                        pstmt1.executeUpdate();
+                        
+                       
+                        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {	
+				pstmt1.close();       
+				con.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			
+		}
+    }
+
+    @Override
+    public void insertarListaSolidaria(String idUser, int codS) {
+        
+                Connection con = null;
+                PreparedStatement pstmt1 = null;                
+                               
+		String sql1 = "INSERT INTO `futbolfive`.`detalle_lista_solidaria` (`user`, `cod_lista_s`) VALUES (?, ?);";                
+                
+		try {
+			con = mysql.getConnection();
+                        
+			pstmt1 = con.prepareStatement(sql1);   
+                        pstmt1.setString(1, idUser);
+                        pstmt1.setInt(2, codS);
+                    
+                        pstmt1.executeUpdate();
+                        
+                       
+                        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {	
+				pstmt1.close();       
+				con.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			
+		}
+    }
+
+    @Override
+    public boolean verificarExisteLE(String idUser, int codE) {       
+             
+                Connection con = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+                boolean existe=false;
+                
+		String sql ="SELECT COUNT(USER) FROM DETALLE_LISTA_ESTANDAR WHERE COD_LISTA_E=? AND USER=?;";                
+		
+		try {
+			con = mysql.getConnection();
+			// preparo la sentencia sql
+			pstmt = con.prepareStatement(sql);
+			// si hay parametros para el sql lo seteo
+			
+			pstmt.setInt(1,codE);    
+                        pstmt.setString(2, idUser);
+                        
+                        // ejecuto la sentencia
+			rs = pstmt.executeQuery();
+			
+			// proceso el resultset
+                        while(rs.next()){
+                            int cantidad = rs.getInt(1);
+                            if(cantidad != 0){
+                                existe=true;
+                            }
+                        }
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return existe;
+    }
+
+    @Override
+    public boolean verificarExisteLS(String idUser, int codE) {
+        Connection con = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+                boolean existe=false;
+                
+		String sql ="SELECT COUNT(USER) FROM DETALLE_LISTA_SOLIDARIA WHERE COD_LISTA_S=? AND USER=?;";                
+		
+		try {
+			con = mysql.getConnection();
+			// preparo la sentencia sql
+			pstmt = con.prepareStatement(sql);
+			// si hay parametros para el sql lo seteo
+			
+			pstmt.setInt(1,codE);    
+                        pstmt.setString(2, idUser);
+                        
+                        // ejecuto la sentencia
+			rs = pstmt.executeQuery();
+			
+			// proceso el resultset
+                        while(rs.next()){
+                            int cantidad = rs.getInt(1);
+                            if(cantidad != 0){
+                                existe=true;
+                            }
+                        }
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return existe;
+    }
+
+    @Override
+    public List<Partido> listarPartidos(String iduser) {
+        
+         Connection con = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+     
+        
+                String sql1="SELECT P.ORGANIZADOR,P.COD_CANCHA,P.COD_HORARIO,C.DESCRIPCION,C.DIRECCION,H.DIA,H.HORA_INICIO,H.HORA_FIN,P.COD_PAGO,PG.MONTO,PG.COMISION,PG.ESTADO_PAGO,P.LISTA_ESTANDAR,P.LISTA_SOLIDARIA,P.ESTADO_PARTIDO,P.FECHA_INSCRIPCION,P.FECHA\n" +
+                            "FROM PARTIDO P INNER JOIN PAGO PG ON  P.COD_PAGO=PG.COD_PAGO\n" +
+                            "INNER JOIN  DETALLE_CANCHA_HORARIO D1 ON P.COD_CANCHA=D1.COD_CANCHA AND P.COD_HORARIO=D1.COD_HORARIO\n" +
+                            "INNER JOIN HORARIO H ON D1.COD_HORARIO=H.COD_HORARIO\n" +
+                            "INNER JOIN CANCHA C ON D1.COD_CANCHA=C.COD_CANCHA\n" +
+                            "WHERE P.ORGANIZADOR=? and p.estado_partido='disponible';";
+                
+                List<Partido> lorganizado= new <Partido>ArrayList();
+                
+                 try {
+			con = mysql.getConnection();
+			pstmt = con.prepareStatement(sql1);		
+			pstmt.setString(1,iduser);  
+                      
+                        
+			rs = pstmt.executeQuery();
+                        
+			while ( rs.next() ) {
+                             
+				lorganizado.add( new Partido( rs.getInt(13),
+                                                              rs.getInt(14),
+                                                              rs.getString(4),
+                                                              rs.getString(5),
+                                                              rs.getString(6),
+                                                              rs.getInt(7),
+                                                              rs.getInt(8),
+                                                              rs.getString(15)
+                                                              
+                                                        ));
+                        }
+                        
+                        
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+           
+        return lorganizado; 
+        
+    }
+
+    @Override
+    public List<Partido> listarCompromisos(String iduser) {
+     
+         Connection con = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+     
+        
+                String sql1="SELECT p.organizador,C.DESCRIPCION,C.DIRECCION,H.DIA,H.HORA_INICIO,H.HORA_FIN\n" +
+                            "FROM detalle_lista_estandar dle\n" +
+                            "inner join lista_estandar le\n" +
+                            "on dle.cod_lista_e=le.cod_lista_e\n" +
+                            "inner join partido p\n" +
+                            "on le.cod_lista_e=p.lista_estandar\n" +
+                            "INNER JOIN  DETALLE_CANCHA_HORARIO D1 ON P.COD_CANCHA=D1.COD_CANCHA AND P.COD_HORARIO=D1.COD_HORARIO\n" +
+                            "INNER JOIN HORARIO H ON D1.COD_HORARIO=H.COD_HORARIO\n" +
+                            "INNER JOIN CANCHA C ON D1.COD_CANCHA=C.COD_CANCHA\n" +
+                            "where dle.user=? and p.estado_partido='disponible';";
+                
+                List<Partido> lcompromisos= new <Partido>ArrayList();
+                
+                 try {
+			con = mysql.getConnection();
+			pstmt = con.prepareStatement(sql1);		
+			pstmt.setString(1,iduser);  
+                      
+                        
+			rs = pstmt.executeQuery();
+                        
+			while ( rs.next() ) {
+                             
+				lcompromisos.add( new Partido( rs.getString(1),
+                                                              rs.getString(2),
+                                                              rs.getString(3),
+                                                              rs.getString(4),
+                                                              rs.getInt(5),
+                                                              rs.getInt(6)
+                                                              
+                                                        ));
+                        }
+                        
+                        
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+           
+        return lcompromisos; 
+        
+        
+    }
+
+    @Override
+    public List<Partido> listarSolidarias(String iduser) {
+       
+         Connection con = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+     
+        
+                String sql1="SELECT p.organizador,C.DESCRIPCION,C.DIRECCION,H.DIA,H.HORA_INICIO,H.HORA_FIN\n" +
+                            "FROM detalle_lista_solidaria dls\n" +
+                            "inner join lista_solidaria ls\n" +
+                            "on dls.cod_lista_s=ls.cod_lista_s\n" +
+                            "inner join partido p\n" +
+                            "on ls.cod_lista_s=p.lista_solidaria\n" +
+                            "INNER JOIN  DETALLE_CANCHA_HORARIO D1 ON P.COD_CANCHA=D1.COD_CANCHA AND P.COD_HORARIO=D1.COD_HORARIO\n" +
+                            "INNER JOIN HORARIO H ON D1.COD_HORARIO=H.COD_HORARIO\n" +
+                            "INNER JOIN CANCHA C ON D1.COD_CANCHA=C.COD_CANCHA\n" +
+                            "where dls.user=? and p.estado_partido='disponible';";
+                
+                List<Partido> lcompromisos= new <Partido>ArrayList();
+                
+                 try {
+			con = mysql.getConnection();
+			pstmt = con.prepareStatement(sql1);		
+			pstmt.setString(1,iduser);  
+                      
+                        
+			rs = pstmt.executeQuery();
+                        
+			while ( rs.next() ) {
+                             
+				lcompromisos.add( new Partido( rs.getString(1),
+                                                              rs.getString(2),
+                                                              rs.getString(3),
+                                                              rs.getString(4),
+                                                              rs.getInt(5),
+                                                              rs.getInt(6)
+                                                              
+                                                        ));
+                        }
+                        
+                        
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+           
+        return lcompromisos; 
+        
+        
+        
+        
+    }
+
+    @Override
+    public List<Partido> BuscarPartidos(String fecha, String dia) {
+          Connection con = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+     
+        
+                String sql1="SELECT c1.descripcion,c1.direccion,h1.dia,h1.hora_inicio,h1.hora_fin\n" +
+                            "FROM cancha c1 inner join detalle_cancha_horario d1 on c1.cod_cancha=d1.cod_cancha\n" +
+                            "inner join horario h1 on d1.cod_horario=h1.cod_horario\n" +
+                            "where h1.dia=? and (c1.cod_cancha,h1.cod_horario)\n" +
+                            "in (SELECT cod_cancha,cod_horario FROM partido where estado_partido='disponible' and fecha=?);";
+                
+                List<Partido> ldisponibles= new <Partido>ArrayList();
+                
+                try {
+			con = mysql.getConnection();
+			pstmt = con.prepareStatement(sql1);		
+			pstmt.setString(1,dia);  
+                        pstmt.setString(2,fecha);
+                        String orga="nulo";
+			rs = pstmt.executeQuery();
+                        
+			while ( rs.next() ) {
+                             
+				ldisponibles.add( new Partido( orga,
+                                                              rs.getString(1),
+                                                              rs.getString(2),
+                                                              rs.getString(3),
+                                                              rs.getInt(4),
+                                                              rs.getInt(5)
+                                                              
+                                                        ));
+                                
+                                String sql2="SELECT cod_pago FROM partido where estado_partido='disponible' and fecha='2014-11-18';";
+                                
+                                
+                                
+                                
+                                
+                        }
+                        
+                        
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+           
+        return ldisponibles; 
+        
+        
+        
+        
+    }
+
+    
     
 }

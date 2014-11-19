@@ -48,7 +48,7 @@
 		<div class="main_content">
 			<div class="header">
 				<h5>Menu Opciones</h5>
-				<div class="hit">Elige una opcion de mantenimiento
+				<div class="hit">Cancela los encuentros cuya fecha expiro, ademas cierra las listas cuando estan completas.
 				</div>
 			</div>
 			<div class="body">

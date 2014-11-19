@@ -5,6 +5,7 @@
  */
 package futbol.five.com.singleton;
 
+import com.twilio.sdk.TwilioRestException;
 import futbol.five.com.bean.Partido;
 import futbol.five.com.dao.CanchaDAO;
 import futbol.five.com.interfaz.CanchaIF;
@@ -28,7 +29,7 @@ public class MantenimientoBD {
         return m;
     }
     
-    public boolean verificarMantenimiento(){
+    public boolean verificarMantenimiento() throws TwilioRestException{
         boolean status=false;
         CanchaIF cancha = new CanchaDAO();
         List lPartido1=cancha.mantenimientoFechaPartido();
@@ -39,14 +40,19 @@ public class MantenimientoBD {
             for (int j=0;j<lPartido1.size();j++){
                 Partido p1 = (Partido)lPartido1.get(j);
                 cancha.actualizarEstadoCaducado(p1);
+                cancha.obtenerNumTL(p1.getListaE());
+                
                 
                //Notificar a todos los usuarios (caducado)
+               Sms sms = Sms.getSms();
+               sms.enviarMensaje(cancha.obtenerNumTL(p1.getListaE()), "El partido no se realizara porque esta caducado");
+               
                 
             }
             for (int i=0;i<lPartido2.size();i++){
                 Partido p2 = (Partido)lPartido2.get(i);
-                cancha.actualizarEstadoLleno(p2);
-                //Actualizar el Estado en las TABLAS : LISTA ESTANDAR,LISTA SOLIDARIA;
+                cancha.actualizarEstadoLleno(p2); 
+                
             }
             status =true;
           

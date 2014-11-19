@@ -5,8 +5,11 @@
  */
 package futbol.five.com.servlet;
 
+import com.twilio.sdk.TwilioRestException;
 import futbol.five.com.singleton.MantenimientoBD;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,10 +31,14 @@ public class Mantenimiento extends HttpServlet {
         HttpSession ses = request.getSession();
         MantenimientoBD mantenimiento = MantenimientoBD.getMantenimientoBD();
         
-        if (mantenimiento.verificarMantenimiento()==true){
-            ses.setAttribute("STATUS","SE ACTUALIZO LA BASE DE DATOS CORRECTAMENTE");
-        }else{
-            ses.setAttribute("STATUS","LAS BASE DE DATOS NO NECESITABA SER ACTUALIZADAS");
+        try {
+            if (mantenimiento.verificarMantenimiento()==true){
+                ses.setAttribute("STATUS","SE ACTUALIZO LA BASE DE DATOS CORRECTAMENTE");
+            }else{
+                ses.setAttribute("STATUS","LAS BASE DE DATOS NO NECESITABA SER ACTUALIZADAS");
+            }
+        } catch (TwilioRestException ex) {
+            Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         RequestDispatcher rd = request.getRequestDispatcher("/panelAdministrador.jsp");

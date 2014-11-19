@@ -52,6 +52,29 @@ public class Partido {
         this.fechaIns = fechaIns;
         this.fecha = fecha;
     }
+
+    public Partido(int listaE,int listaS,String descripcion, String direccion, String dia, int horaInicio, int horaFin, String estadoPartido) {
+        this.listaE= listaE;
+        this.listaS= listaS;
+        this.descripcion = descripcion;
+        this.direccion = direccion;
+        this.dia = dia;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.estadoPartido = estadoPartido;
+    }
+
+    public Partido(String organizador, String descripcion, String direccion, String dia, int horaInicio, int horaFin) {
+        this.organizador = organizador;
+        this.descripcion = descripcion;
+        this.direccion = direccion;
+        this.dia = dia;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+    }
+    
+    
+    
     
     public Partido(String organizador, int codCancha, int codHorario, String descripcion, String direccion, String dia, int horaInicio, int horaFin, int listaE, int listaS) {
         this.organizador = organizador;

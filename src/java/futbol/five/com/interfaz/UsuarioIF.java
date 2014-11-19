@@ -6,6 +6,9 @@
 
 package futbol.five.com.interfaz;
 
+import futbol.five.com.bean.Usuario;
+import java.util.List;
+
 /**
  *
  * @author Cesar
@@ -16,5 +19,6 @@ public interface UsuarioIF {
     public boolean verificarAdministrador(String usuario,String passw);
     public void registrarUsuario(String usuario,String nombre,String apellido,String email,String proveedor,String ntelefono,String pass1,String fecha);    
     public boolean verificarSuscripcion(String iduser);
-    
+    public List<Usuario> listaEstandar(int ListaE);
+    public List<Usuario> listaSolidaria(int ListaS);
 }
