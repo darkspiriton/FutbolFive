@@ -1,29 +1,19 @@
-<%-- 
-    Document   : bienvenido
-    Created on : 07/09/2014, 07:42:17 PM
-    Author     : Richard
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="LOGIN_VALIDO" class="java.lang.String" scope="session" />
-<jsp:useBean id="listaUser" class="java.util.ArrayList" scope="session" />
+<jsp:useBean id="idUser" class="java.lang.String" scope="session"/>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <jsp:include page="/layout/head.jsp"/>
 </head>
 <body>
-
-	<header>
+    <% if (idUser.equals("") ) { %>
+	Necesita esta Logeado para acceder  
+        <%}else {%>    
+        <header>
 		<div class="logo">
 			<img src="imagenes/logo.png" alt="Futbol5"/>
 		</div>
-                
-                <% if ( listaUser == null ) { %>	
-                 <center><h2><%= LOGIN_VALIDO %></h2></center>
-                 <% } %>
-                  
-            
+                          
             
 		<div class="titular">
 			<h1 class="titulo">
@@ -41,12 +31,7 @@
 
 		</div>
 		<div class="usuario">
-			<figure class="avatar">
-				<img src="imagenes/avatar.jpg" alt="user">
-			</figure>
-			<a href="/FutbolFive/index.jsp" class="opcion">
-				X
-			</a>
+			<jsp:include page="/layout/logOut.jsp"/>
 		</div>
 	</header>
 
@@ -76,6 +61,7 @@
 	<footer>
             <jsp:include page="/layout/footer.jsp"/>
 	</footer>
+                        <%}%>
 
 </body>
 </html>

@@ -1,8 +1,3 @@
-<%-- 
-    Document   : VerPartidos
-    Created on : 17/09/2014, 06:57:05 PM
-    Author     : Richard
---%>
 
 <%@page import="futbol.five.com.bean.Cancha"%>
 <%@page import="futbol.five.com.bean.Partido"%>
@@ -11,8 +6,6 @@
 <jsp:useBean id="listaPartidos" class="java.util.ArrayList" scope="session"/>
 <jsp:useBean id="idUser" class="java.lang.String" scope="session"/>
 <jsp:useBean id="fechaInvalida" class="java.lang.String" scope="session"/>
-<jsp:useBean id="ESTADO_LISTA" class="java.lang.String" scope="session"/>
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -26,7 +19,9 @@
 	
 </head>
 <body>
-
+    <% if (idUser.equals("") ) { %>
+	Necesita esta Logeado para acceder  
+        <%}else {%>   
 	<header>
 		<div class="logo">
 			<img src="imagenes/logo.png" alt="Futbol5"/>
@@ -37,7 +32,7 @@
 			</h1>
 			<div>
 				<a href="#" class="filtro">
-					FutbolFive
+					Futbol 5
 				</a>
 				<a href="/FutbolFive/buscarCancha.jsp" class="organizar">
 					Organizar
@@ -46,12 +41,7 @@
 
 		</div>
 		<div class="usuario">
-			<figure class="avatar">
-				<img src="imagenes/avatar.jpg" alt="user">
-			</figure>
-			<a href="/FutbolFive/index.jsp" class="opcion">
-				X
-			</a>
+			<jsp:include page="/layout/logOut.jsp"/>
 		</div>
 	</header>
 
@@ -112,5 +102,8 @@
 	<footer>
             <jsp:include page="/layout/footer.jsp"/>
 	</footer>
+                  	
+                        <%}%>
 </body>
+
 </html>

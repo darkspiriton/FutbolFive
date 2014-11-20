@@ -5,6 +5,5 @@
     <li><a href="/FutbolFive/bienvenido.jsp">Inicio</a></li>
     <li><a href="/FutbolFive/buscarCancha.jsp">Organizar Partido</a></li>
     <li><a href="/FutbolFive/verPartidos.jsp">Buscar Partido</a></li>
-    <li><a href="PartidosOrganizados?idUser=<%=idUser%>">Actividad </a></li>
-    <li><a href="#">Cuenta</a></li>
+    <li><a href="PartidosOrganizados?idUser=<%=idUser%>">Actividad Usuario </a></li>    
 </ul>

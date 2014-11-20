@@ -7,6 +7,7 @@
 <%@page import="futbol.five.com.bean.Partido"%>
 <%@page import="futbol.five.com.bean.Cancha"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="idUser" class="java.lang.String" scope="session"/>
 <jsp:useBean id="organizado" class="java.util.ArrayList" scope="session"/>
 <jsp:useBean id="compromisos" class="java.util.ArrayList" scope="session"/>
 <jsp:useBean id="solidarias" class="java.util.ArrayList" scope="session"/>
@@ -22,7 +23,9 @@
 	
 </head>
 <body>
-
+<% if (idUser.equals("") ) { %>
+	Necesita esta Logeado para acceder  
+        <%}else {%>   
 	<header>
 		<div class="logo">
 			<img src="imagenes/logo.png" alt="Futbol5"/>
@@ -33,7 +36,7 @@
 			</h1>
 			<div>
 				<a href="#" class="filtro">
-					FutbolFive
+					Futbol 5
 				</a>
 				<a href="/FutbolFive/buscarCancha.jsp" class="organizar">
 					Organizar
@@ -42,12 +45,7 @@
 
 		</div>
 		<div class="usuario">
-			<figure class="avatar">
-				<img src="imagenes/avatar.jpg" alt="user">
-			</figure>
-			<a href="/FutbolFive/index.jsp" class="opcion">
-				X
-			</a>
+			<jsp:include page="/layout/logOut.jsp"/>
 		</div>
 	</header>
 
@@ -191,5 +189,6 @@
 	<footer>
             <jsp:include page="/layout/footer.jsp"/>
 	</footer>
+        <%}%>
 </body>
 </html>

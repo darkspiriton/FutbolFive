@@ -6,8 +6,8 @@
 
 <%@page import="futbol.five.com.bean.Cancha"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="listaCanchas" class="java.util.ArrayList" scope="session"/>
 <jsp:useBean id="idUser" class="java.lang.String" scope="session"/>
+<jsp:useBean id="listaCanchas" class="java.util.ArrayList" scope="session"/>
 <jsp:useBean id="fechaInvalida" class="java.lang.String" scope="session"/>
 <jsp:useBean id="fechaPartido" class="java.lang.String" scope="session"/>
 <!DOCTYPE html>
@@ -22,7 +22,9 @@
 	
 </head>
 <body>
-
+<% if (idUser.equals("") ) { %>
+	Necesita esta Logeado para acceder  
+        <%}else {%>   
 	<header>
 		<div class="logo">
 			<img src="imagenes/logo.png" alt="Futbol5"/>
@@ -33,21 +35,17 @@
 			</h1>
 			<div>
 				<a href="#" class="filtro">
-					FutbolFive
+					Futbol 5
 				</a>
 				<a href="/FutbolFive/buscarCancha.jsp" class="organizar">
 					Organizar
 				</a>
+
 			</div>
 
 		</div>
 		<div class="usuario">
-			<figure class="avatar">
-				<img src="imagenes/avatar.jpg" alt="user">
-			</figure>
-			<a href="/FutbolFive/index.jsp" class="opcion">
-				X
-			</a>
+			<jsp:include page="/layout/logOut.jsp"/>
 		</div>
 	</header>
 
@@ -59,7 +57,7 @@
 		<div class="main_content">
 			<div class="header">
 				<h5>Elegir Campo Deportivo</h5>
-				<div class="hit">Elige el dia y la hora
+				<div class="hit">Elige el dia y la hora (Solo se puede reservar con 7 dias de anticipacion como máximo )
 				</div>
 			</div>
 			<div class="body">
@@ -130,5 +128,6 @@
 	<footer>
             <jsp:include page="/layout/footer.jsp"/>
 	</footer>
+        <%}%>
 </body>
 </html>

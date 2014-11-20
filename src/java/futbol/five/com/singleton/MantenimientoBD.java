@@ -19,7 +19,7 @@ public class MantenimientoBD {
     
     
     private static final MantenimientoBD m = new MantenimientoBD() ;
-    
+    private CanchaIF cancha = new CanchaDAO();
         
     private MantenimientoBD(){
      
@@ -31,12 +31,12 @@ public class MantenimientoBD {
     
     public boolean verificarMantenimiento() throws TwilioRestException{
         boolean status=false;
-        CanchaIF cancha = new CanchaDAO();
+        
         List lPartido1=cancha.mantenimientoFechaPartido();
-        List lPartido2=cancha.mantenimientoListaEPartido();
         
         
-        if ( lPartido1.size()>0 || lPartido2.size()>0 ){
+        
+        if ( lPartido1.size()>0){
             for (int j=0;j<lPartido1.size();j++){
                 Partido p1 = (Partido)lPartido1.get(j);
                 cancha.actualizarEstadoCaducado(p1);
@@ -46,14 +46,9 @@ public class MantenimientoBD {
                //Notificar a todos los usuarios (caducado)
                Sms sms = Sms.getSms();
                sms.enviarMensaje(cancha.obtenerNumTL(p1.getListaE()), "El partido no se realizara porque esta caducado");
-               
-                
+                           
             }
-            for (int i=0;i<lPartido2.size();i++){
-                Partido p2 = (Partido)lPartido2.get(i);
-                cancha.actualizarEstadoLleno(p2); 
-                
-            }
+            
             status =true;
           
         }
@@ -62,4 +57,21 @@ public class MantenimientoBD {
         
         
     }
+    public boolean verificarMantenimientoListas(){
+        boolean status=false;
+        List lPartido2=cancha.mantenimientoListaEPartido();
+        if(lPartido2.size()>0){
+            for (int i=0;i<lPartido2.size();i++){
+                Partido p2 = (Partido)lPartido2.get(i);
+                cancha.actualizarEstadoLleno(p2); 
+                
+            }
+            status=true;
+        }
+            
+        
+        
+        return status;
+    }
+    
 }

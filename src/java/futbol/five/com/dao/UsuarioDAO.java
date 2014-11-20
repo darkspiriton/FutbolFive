@@ -28,7 +28,7 @@ public class UsuarioDAO implements UsuarioIF{
     public boolean verificarUsuario(String usuario, String passw) {
       
 		String nickAux;
-		String sql = "SELECT * FROM USUARIO";
+		String sql = "SELECT USER, CONTRASEÑA FROM USUARIO WHERE USER=?";
 		PreparedStatement pstmt = null;
 		Connection con = null;
 		ResultSet rs= null;
@@ -39,13 +39,14 @@ public class UsuarioDAO implements UsuarioIF{
 		try {
 			
 			pstmt = con.prepareStatement(sql);
+                        pstmt.setString(1, usuario);
 			rs = pstmt.executeQuery();
 			
 			
 			while(rs.next()){
 				nickAux=rs.getString(1);
 				
-				if (usuario.equals(nickAux) && rs.getString(6).equals(encriptaEnMD5(passw))){					
+				if (usuario.equals(nickAux) && rs.getString(2).equals(encriptaEnMD5(passw))){					
 						existe=true;
 						break;				
 				} 
@@ -128,7 +129,7 @@ public class UsuarioDAO implements UsuarioIF{
     public boolean verificarAdministrador(String usuario, String passw) {
         
                 String nickAux;
-		String sql = "SELECT * FROM ADMIN";
+		String sql = "SELECT USER,CONTRASEÑA FROM ADMIN WHERE USER=?";
 		PreparedStatement pstmt = null;
 		Connection con = null;
 		ResultSet rs= null;
@@ -139,6 +140,7 @@ public class UsuarioDAO implements UsuarioIF{
 		try {
 			
 			pstmt = con.prepareStatement(sql);
+                        pstmt.setString(1, usuario);
 			rs = pstmt.executeQuery();
 			
 			

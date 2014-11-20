@@ -1,13 +1,7 @@
-<%-- 
-    Document   : login
-    Created on : 06/09/2014, 03:17:48 PM
-    Author     : Cesar
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="futbol.five.com.bean.Usuario" %>    
 
-<jsp:useBean id="LOGIN_INVALIDO_CONTRASEÑA" class="java.lang.String" scope="session" />
+<jsp:useBean id="ERROR_LOGIN" class="java.lang.String" scope="session" />
 
 <!DOCTYPE html>
 <html lang="es">
@@ -62,7 +56,7 @@
 
  			</div>
  			<div class="footer">
- 				<span class="error"><%= LOGIN_INVALIDO_CONTRASEÑA %></span>
+ 				<span class="error"><%= ERROR_LOGIN %></span>
  				<a class="registro_link" href="/FutbolFive/registro.jsp">¿No tienes una cuenta? Registrate aqui</a>
  				
  			</div>

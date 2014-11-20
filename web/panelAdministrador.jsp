@@ -1,6 +1,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="STATUS" class="java.lang.String" scope="session"/>
+<jsp:useBean id="status" class="java.lang.String" scope="session"/>
+<jsp:useBean id="idAdmin" class="java.lang.String" scope="session"/>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,6 +12,9 @@
 	<link rel="stylesheet" href="css/normalize.css"/>
 </head>
 <body>
+    <% if (idAdmin.equals("") ) { %>
+	Necesita esta Logeado para acceder  
+        <%}else {%> 
 
 	<header>
 		<div class="logo">
@@ -31,12 +35,7 @@
 
 		</div>
 		<div class="usuario">
-			<figure class="avatar">
-				<img src="imagenes/avatar.jpg" alt="user">
-			</figure>
-			<a href="/FutbolFive/index.jsp" class="opcion">
-				X
-			</a>
+			<jsp:include page="/layout/logOut.jsp"/>
 		</div>
 	</header>
 
@@ -53,10 +52,14 @@
 			</div>
 			<div class="body">
 				<form action="Mantenimiento" method="post">
-                                    <span class="boton"><input name="commit" type="submit" value="Mantenimiento"></span>
+                                    <span class="boton"><input name="commit" type="submit" value="Mantenimiento Fechas Vencidas"></span>
+ 				</form>
+                                <form action="MantenimientoListas" method="post">
+                                    <span class="boton"><input name="commit" type="submit" value="Mantenimiento Listas Completas"></span>
  				</form>
                                 
-                                <span class="status"><%=STATUS%></span>
+                                <span class="status"><%=status%></span>
+                                
 			</div>
                         
 			<section class="partidos">
@@ -72,5 +75,6 @@
 	<footer>
             <jsp:include page="/layout/footer.jsp"/>
 	</footer>
+          <%}%>
 </body>
 </html>

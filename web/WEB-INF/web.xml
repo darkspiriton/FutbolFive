@@ -36,6 +36,14 @@
         <servlet-name>RegistrarUserListaS</servlet-name>
         <servlet-class>futbol.five.com.servlet.RegistrarUserListaS</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LogOut</servlet-name>
+        <servlet-class>futbol.five.com.servlet.LogOut</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MantenimientoListas</servlet-name>
+        <servlet-class>futbol.five.com.servlet.MantenimientoListas</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginPrueba</servlet-name>
         <url-pattern>/LoginPrueba</url-pattern>
@@ -71,6 +79,14 @@
     <servlet-mapping>
         <servlet-name>RegistrarUserListaS</servlet-name>
         <url-pattern>/RegistrarUserListaS</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogOut</servlet-name>
+        <url-pattern>/LogOut</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MantenimientoListas</servlet-name>
+        <url-pattern>/MantenimientoListas</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

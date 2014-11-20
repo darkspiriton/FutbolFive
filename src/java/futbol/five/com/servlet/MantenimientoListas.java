@@ -5,11 +5,8 @@
  */
 package futbol.five.com.servlet;
 
-import com.twilio.sdk.TwilioRestException;
 import futbol.five.com.singleton.MantenimientoBD;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,28 +18,28 @@ import javax.servlet.http.HttpSession;
  *
  * @author Mari
  */
-public class Mantenimiento extends HttpServlet {
+public class MantenimientoListas extends HttpServlet {
 
- 
-    @Override
+     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
                
         HttpSession ses = request.getSession();
         MantenimientoBD mantenimiento = MantenimientoBD.getMantenimientoBD();
         
-        try {
-            if (mantenimiento.verificarMantenimiento()==true){
-                ses.setAttribute("status","SE CANCELARON LOS PARTIDOS CON FECHAS CADUCADAS");
+        if (mantenimiento.verificarMantenimientoListas()==true){
+                ses.setAttribute("status","SE CERRARON LISTAS COMPLETAS EXITOSAMENTE");
+                
             }else{
-                ses.setAttribute("status","NO SE ENCONTRARON PARTIDOS CON FECHAS CADUCADAS");
+                ses.setAttribute("status","NO SE ENCONTRARON LISTAS QUE MODIFICAR");
             }
-        } catch (TwilioRestException ex) {
-            Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
         RequestDispatcher rd = request.getRequestDispatcher("/panelAdministrador.jsp");
         rd.forward(request, response);
+        }
+        
     }
+    
 
-}
+
+
+

@@ -7,6 +7,7 @@
 <%@page import="futbol.five.com.bean.Cancha"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="detallePartido" class="futbol.five.com.bean.Partido" scope="session"/>
+<jsp:useBean id="idUser" class="java.lang.String" scope="session"/>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -20,6 +21,9 @@
 	
 </head>
 <body>
+    <% if (idUser.equals("") ) { %>
+	Necesita esta Logeado para acceder  
+        <%}else {%>   
 
 	<header>
 		<div class="logo">
@@ -40,12 +44,7 @@
 
 		</div>
 		<div class="usuario">
-			<figure class="avatar">
-				<img src="imagenes/avatar.jpg" alt="user">
-			</figure>
-			<a href="/FutbolFive/index.jsp" class="opcion">
-				X
-			</a>
+			<jsp:include page="/layout/logOut.jsp"/>
 		</div>
 	</header>
 
@@ -121,5 +120,6 @@
 	<footer>
             <jsp:include page="/layout/footer.jsp"/>
 	</footer>
+        <%}%>
 </body>
 </html>

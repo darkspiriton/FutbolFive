@@ -7,6 +7,7 @@
 <%@page import="futbol.five.com.bean.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="lsolidaria" class="java.util.ArrayList" scope="session"/>
+<jsp:useBean id="idUser" class="java.lang.String" scope="session"/>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -19,6 +20,9 @@
 	
 </head>
 <body>
+    <% if (idUser.equals("") ) { %>
+	Necesita esta Logeado para acceder  
+        <%}else {%>   
 
 	<header>
 		<div class="logo">
@@ -109,5 +113,6 @@
 	<footer>
             <jsp:include page="/layout/footer.jsp"/>
 	</footer>
+        <%}%>
 </body>
 </html>

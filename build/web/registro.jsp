@@ -1,12 +1,7 @@
-<%-- 
-    Document   : inscripcion
-    Created on : 07/09/2014, 06:51:08 PM
-    Author     : Richard
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="futbol.five.com.bean.Usuario" %>    
-<jsp:useBean id="INSCRIPCION_INVALIDO_CONTRASEÑA" class="java.lang.String" scope="session" />
+<jsp:useBean id="ERROR_REGISTRO" class="java.lang.String" scope="session" />
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -61,33 +56,10 @@
                         <p><label for="fecha">Fecha de Nacimiento</label><input id="fecha" name="fecha" type="date" /></p>
                         <span class="boton"><input name="commit" type="submit" value="Registrar en Futbol 5"></span>                        
                     </form>
-                    <form action="#" method="post">
-                    	<p><label for="suscripcion">Tipo de Suscripcion</label>	
-							<select name="suscripcion">
-								<option value="1">1 Mes $3.99 </option>
-								<option value="2">2 Meses $7.49</option>
-								<option value="3">3 Meses $11.49</option>
-								<option value="4">6 Meses $21.99</option>
-								<option value="5">1 año $40.00</option>
-							</select>
-						</p> 
-                    	<p><label for="tarjeta">Tipo</label>	
-							<select name="tarjeta">
-								<option value="1">Visa</option>
-								<option value="1">Mastercard</option>
-							</select>
-						</p>  
-                        <p><label for="ntarjeta">N° de Tarjeta</label><input placeholder="Ingrese n° tarjeta" id="ntarjeta" name="ntarjeta" type="text" /></p>
-                        <p><label for="mes">Mes</label><input placeholder="Ingrese el mes"	 id="mes" name="mes" type="text" /></p>
-                        <p><label for="año">Año</label><input placeholder="Ingrese el año"  id="año" name="año" type="text" /></p>
-                        <p><label for="cvv">CVV</label><input placeholder="Ingrese codigo"  id="cvv" name="cvv" type="text" /></p>
-                        <span class="boton"><input name="commit" type="submit" value="Registrar Suscripcion"></span>                 
-                    </form>
-
- 				 	
+                    				 	
 			</div>
 			<div class="footer">
- 				<span class="error"><%= INSCRIPCION_INVALIDO_CONTRASEÑA %></span>
+ 				<span class="error"><%= ERROR_REGISTRO %></span>
  			</div>					                
 		</div>	
 	</div>

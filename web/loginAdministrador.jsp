@@ -55,7 +55,7 @@
 
 				<form action="LoginAdministrador" method="post">
 				    
-				    <p><label for="usuario">Usuario</label><input placeholder="Ingrese su usuario" id="usuario" name="usuario" type="text" /></p>
+				    <p><label for="usuario">Admin User</label><input placeholder="Ingrese su usuario" id="usuario" name="usuario" type="text" /></p>
                     <p><label for="passw">Contraseña</label><input placeholder="Ingrese su contraseña" id="passw" name="passw" type="password" /></p>
 				    <span class="boton"><input name="commit" type="submit" value="Iniciar sesión"></span>
  				 </form>

@@ -6,9 +6,7 @@
 package futbol.five.com.servlet;
 
 import futbol.five.com.singleton.Administrador;
-import futbol.five.com.singleton.Singleton;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,14 +23,14 @@ public class LoginAdministrador extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                // Recupero los parametros enviados desde el FORM
+                
                 HttpSession ses = request.getSession(true);
 		String user = request.getParameter("usuario");
 		String pass = request.getParameter("passw");
 		
 		Administrador adm = Administrador.getAdministrador();
 		if (adm.verificarAdministrador(user, pass)==true){
-			ses.setAttribute("idUser", user);
+			ses.setAttribute("idAdmin", user);
 			ses.removeAttribute("LOGIN_INVALIDO_ADMINISTRADOR");
 			RequestDispatcher rd = request.getRequestDispatcher("/panelAdministrador.jsp");
 			rd.forward(request, response);
