@@ -85,8 +85,11 @@
                                                         <div class="acciones">
 					<div class="registro">
                                             <a href="ListaE?listaE=<%=o.getListaE()%>" class="inscribirse">ListaEstandar</a>
-					<a href="ListaS?listaS=<%=o.getListaS()%>" class="detalle">ListaSolidaria</a>
-				        </div>
+                                            <a href="ListaS?listaS=<%=o.getListaS()%>" class="detalle">ListaSolidaria</a>
+                                            <a href="" class="inscribirse">Realizar Pago</a>
+                                            <a href="" class="inscribirse">Cancelar</a>
+                                            
+                                        </div>
 				
                 
 				 </article>
@@ -126,7 +129,8 @@
 							<p class="fecha"><strong></strong>Disponible</p>
 						</div>
 					</div>
-                                        
+                                                        <div class="acciones">
+                                    
 				
 					
 				

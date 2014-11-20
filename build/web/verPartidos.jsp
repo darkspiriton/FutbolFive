@@ -6,6 +6,7 @@
 <jsp:useBean id="listaPartidos" class="java.util.ArrayList" scope="session"/>
 <jsp:useBean id="idUser" class="java.lang.String" scope="session"/>
 <jsp:useBean id="fechaInvalida" class="java.lang.String" scope="session"/>
+<jsp:useBean id="ESTADO_LISTA" class="java.lang.String" scope="session"/>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -57,19 +58,17 @@
 		<div class="body">
 				<form action="BuscarPartidos" method="post">
 				    
-				       <p><label for="fecha">Fecha</label><input id="fecha" name="fecha" type="date" /></p>
+				       <p><label for="fecha">Fecha</label><input id="fecha" name="fecha" type="date" required/></p>
 				       
                                         
 				  
 				    <span class="boton"><input name="commit" type="submit" value="Buscar"></span>
  				 </form>
                             <span class="error"><%=fechaInvalida%></span>
+                            <span class="error"><%=ESTADO_LISTA%></span>
 			</div>
 
 			<section class="partidos">
-                            
-                            
-                           
 
                 <% if (listaPartidos!= null ) { %>                   
              	<%for (int i=0; i < listaPartidos.size(); i++ ) {Partido p = (Partido)listaPartidos.get(i);%>
@@ -90,6 +89,14 @@
 							<p class="fecha"><strong></strong>Disponible</p>
 						</div>
 					</div>
+                                        <div class="acciones">
+                                            
+						<div class="registro">
+                                                    <a href="RegistrarUserListaE?fecha=?idUser=<%=idUser%>" class="inscribirse">Lista Estandar</a>
+                                                    <a href="RegistrarUserListaS?idUser=<%=idUser%>" class="inscribirse">Lista Solidaria</a>
+						</div>
+						
+					</div>            
 					         
 				 </article>
                              <%} %><% }else { %>                	

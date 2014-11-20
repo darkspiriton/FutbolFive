@@ -1,6 +1,7 @@
 
 package futbol.five.com.servlet;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import futbol.five.com.singleton.Singleton;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -35,7 +36,16 @@ public class RegistroServlet extends HttpServlet {
                    if(gestor.validarNumeroTelefono(ntelefono)==true){
                         ses.removeAttribute("ERROR_LOGIN");
                         ses.removeAttribute("ERROR_REGISTRO");
-                        gestor.registrarUsuario(user, nombre, apellido, correo, proveedor, ntelefono, pass1, fechaN);
+                        try {
+                            gestor.registrarUsuario(user, nombre, apellido, correo, proveedor, ntelefono, pass1, fechaN);
+                            throw new MySQLIntegrityConstraintViolationException();
+                        } catch (MySQLIntegrityConstraintViolationException ex) {
+                                 ses.setAttribute("ERROR_REGISTRO", "El usuariio ya existe!!!!!");
+                                RequestDispatcher rd = request.getRequestDispatcher("/registro.jsp");
+                                rd.forward(request, response);
+                        }
+                        
+                        
                         RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
                         rd.forward(request, response);
                    }else{

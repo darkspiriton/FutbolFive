@@ -6,6 +6,7 @@
 
 package futbol.five.com.dao;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import futbol.five.com.bean.Usuario;
 import futbol.five.com.interfaz.UsuarioIF;
 import futbol.five.com.metodo.ConnectionMySQL;
@@ -16,6 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -95,14 +98,15 @@ public class UsuarioDAO implements UsuarioIF{
                         pstmt.setString(8,ntelefono);
                         pstmt.setString(9,proveedor);
 			
-			pstmt.executeUpdate();
-                        
+			
+                        pstmt.executeUpdate();
 			
 			// proceso el resultset
 			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+                    
 		} finally {
 			try {
 				

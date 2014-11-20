@@ -40,20 +40,20 @@
 			</div>
 			<div class="body">
                     <form action="RegistroServlet" method="post">	   
-                        <p><label for="usuario">Usuario</label><input placeholder="Ingrese su usuario" id="usuario" name="usuario" type="text" /></p>
-                        <p><label for="nombre">Nombre</label><input placeholder="Ingrese su nombre"	 id="nombre" name="nombre" type="text" /></p>
-                        <p><label for="apellido">Apellido</label><input placeholder="Ingrese su pellido"  id="apellido" name="apellido" type="text" /></p>
-                        <p><label for="email">E-mail</label><input placeholder="Ingrese su correo"  id="email" name="email" type="text" /></p>
+                        <p><label for="usuario">Usuario</label><input placeholder="Ingrese su usuario" id="usuario" name="usuario" type="text" required/></p>
+                        <p><label for="nombre">Nombre</label><input placeholder="Ingrese su nombre"	 id="nombre" name="nombre" type="text" required/></p>
+                        <p><label for="apellido">Apellido</label><input placeholder="Ingrese su pellido"  id="apellido" name="apellido" type="text" required/></p>
+                        <p><label for="email">E-mail</label><input placeholder="Ingrese su correo"  id="email" name="email" type="text" required/></p>
                         <p><label for="proveedor">Proveedor</label>	
 							<select name="proveedor">
 								<option value="claro">Claro</option>
 								<option value="movistar">Movistar</option>
 							</select>
 						</p>
-                        <p><label for="ntelefono">N° Telefono</label><input placeholder="Ingrese su n° telefonico"  id="ntelefono" name="ntelefono" type="text" /></p>                      
-                        <p><label for="pass1">Contraseña</label><input placeholder="Ingrese su contraseña" id="pass1" name="pass1" type="password" /></p>
-                        <p><label for="pass2">Confirmar Contraseña</label><input placeholder="Reingrese su contraseña" id="pass2" name="pass2" type="password" /></p>
-                        <p><label for="fecha">Fecha de Nacimiento</label><input id="fecha" name="fecha" type="date" /></p>
+                        <p><label for="ntelefono">N° Telefono</label><input placeholder="Ingrese su n° telefonico"  id="ntelefono" name="ntelefono" type="text" required/></p>                      
+                        <p><label for="pass1">Contraseña</label><input placeholder="Ingrese su contraseña" id="pass1" name="pass1" type="password" required/></p>
+                        <p><label for="pass2">Confirmar Contraseña</label><input placeholder="Reingrese su contraseña" id="pass2" name="pass2" type="password" required/></p>
+                        <p><label for="fecha">Fecha de Nacimiento</label><input id="fecha" name="fecha" type="date" required/></p>
                         <span class="boton"><input name="commit" type="submit" value="Registrar en Futbol 5"></span>                        
                     </form>
                     				 	

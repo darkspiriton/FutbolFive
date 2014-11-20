@@ -6,6 +6,7 @@
 
 package futbol.five.com.servlet;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import futbol.five.com.singleton.Singleton;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -34,7 +35,14 @@ public class RegistroPartido extends HttpServlet {
         ses.removeAttribute("listaCanchas");
         
         Singleton gestor = Singleton.getSingleton();
-        ses.setAttribute("detallePartido", gestor.getDetallePartido(iduser, cancha, horario,fecha));
+        try {   
+                ses.setAttribute("detallePartido", gestor.getDetallePartido(iduser, cancha, horario,fecha));
+                throw new MySQLIntegrityConstraintViolationException();
+        } catch (MySQLIntegrityConstraintViolationException ex) {
+                //Implementar medida para evitar el error
+                RequestDispatcher rd = request.getRequestDispatcher("/buscarCancha.jsp");
+                rd.forward(request, response);
+        }
          
         RequestDispatcher rd = request.getRequestDispatcher("/registroPartidoDetalle.jsp");
         rd.forward(request, response);

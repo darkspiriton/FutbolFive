@@ -3,10 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/src/java/futbol/five/com/singleton/Administrador.java</file>
-            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/src/java/futbol/five/com/interfaz/UsuarioIF.java</file>
+            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/web/registro.jsp</file>
+            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/src/java/futbol/five/com/servlet/RegistroServlet.java</file>
+            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/web/buscarCancha.jsp</file>
+            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/web/ListaEstandar.jsp</file>
+            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/web/verPartidos.jsp</file>
             <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/src/java/futbol/five/com/singleton/Singleton.java</file>
-            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/src/java/futbol/five/com/servlet/LoginAdministrador.java</file>
+            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/src/java/futbol/five/com/servlet/RegistroPartido.java</file>
+            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/web/Actividad.jsp</file>
+            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/web/registroPartidoDetalle.jsp</file>
+            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/web/ListaSolidaria.jsp</file>
+            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/src/java/futbol/five/com/dao/UsuarioDAO.java</file>
         </group>
     </open-files>
 </project-private>

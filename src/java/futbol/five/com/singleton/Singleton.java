@@ -31,15 +31,20 @@ public class Singleton {
        CanchaIF p = new CanchaDAO();    
        int idCancha=Integer.parseInt(codCancha);
        int idHorario=Integer.parseInt(codHorario);
-       p.registrarPartido(idUser, idCancha, idHorario, u.verificarSuscripcion(idUser),fecha);
-       Partido detalleP= p.getdetallePartido(idUser, idCancha, idHorario, fecha);
+       
+           p.registrarPartido(idUser, idCancha, idHorario, u.verificarSuscripcion(idUser),fecha);
+           Partido detalleP= p.getdetallePartido(idUser, idCancha, idHorario, fecha);
+      
+       
        return detalleP;
        
     }
     
     public void registrarUsuario(String usuario, String nombre, String apellido, String email, String proveedor, String ntelefono, String pass1, String fecha){ 
        UsuarioIF ingresarU = new UsuarioDAO();
+       
        ingresarU.registrarUsuario(usuario, nombre, apellido, email, proveedor, ntelefono, pass1, fecha);
+       
     }
     
     public List getCanchasDisponibles(String dia, String hora, String fecha){

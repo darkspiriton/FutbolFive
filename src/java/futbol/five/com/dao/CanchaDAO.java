@@ -106,11 +106,12 @@ public class CanchaDAO implements CanchaIF {
                 PreparedStatement pstmt4 = null;
                 PreparedStatement pstmt5 = null;
                 
+                String sql4 = "INSERT INTO `futbolfive`.`partido` (`organizador`, `cod_cancha`, `cod_horario`, `fecha`, `cod_pago`, `lista_estandar`, `lista_solidaria`, `estado_partido`,`fecha_inscripcion`) VALUES (?,?,?,?,?,?,?,?,?);";
 		String sql1 = "INSERT INTO `futbolfive`.`pago` (`cod_pago`, `monto`, `comision`, `estado_pago`) VALUES (?,?,?,?);";
 		String sql2 = "INSERT INTO `futbolfive`.`lista_estandar` (`cod_lista_e`, `estado_lista_e`) VALUES (?,?);";
                 String sql3 = "INSERT INTO `futbolfive`.`lista_solidaria` (`cod_lista_s`, `estado_lista_s`) VALUES (?,?);";
-                String sql4 = "INSERT INTO `futbolfive`.`partido` (`organizador`, `cod_cancha`, `cod_horario`, `fecha`, `cod_pago`, `lista_estandar`, `lista_solidaria`, `estado_partido`,`fecha_inscripcion`) VALUES (?,?,?,?,?,?,?,?,?);";
                 String sql5 = "INSERT INTO `futbolfive`.`detalle_lista_estandar` (`user`, `cod_lista_e`) VALUES (?, ?);";
+                
 		try {
 			con = mysql.getConnection();
                         
@@ -118,7 +119,7 @@ public class CanchaDAO implements CanchaIF {
                         pstmt2 = con.prepareStatement(sql2);
                         pstmt3 = con.prepareStatement(sql3);
                         pstmt4 = con.prepareStatement(sql4);
-                        pstmt5 = con.prepareStatement(sql5);
+                        pstmt5 = con.prepareStatement(sql5);                               
                        
                         pstmt1.setInt(1,id);
                         pstmt1.setInt(2, montoPago);
@@ -140,14 +141,14 @@ public class CanchaDAO implements CanchaIF {
                         pstmt4.setInt(7, id);
                         pstmt4.setString(8, estado);
                         pstmt4.setString(9, diaActual1);
-                        
+                                                
                         pstmt5.setString(1,idUser);
                         pstmt5.setInt(2, id);
                         
-			pstmt1.executeUpdate();
+                        pstmt1.executeUpdate();
                         pstmt2.executeUpdate();
                         pstmt3.executeUpdate();
-                        pstmt4.executeUpdate();
+                        pstmt4.executeUpdate();    
                         pstmt5.executeUpdate();
                         	
 		} catch (SQLException e) {

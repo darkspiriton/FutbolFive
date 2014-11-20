@@ -63,7 +63,7 @@
 			<div class="body">
 				<form action="ListarCanchas" method="post">
 				    
-				       <p><label for="fecha">Fecha</label><input id="fecha" name="fecha" type="date" /></p>
+				       <p><label for="fecha">Fecha</label><input id="fecha" name="fecha" type="date" required/></p>
 				        <p><label for="hora">Hora</label>	
 					        <select name="hora">
 							  <option value="8">8:00 am</option>

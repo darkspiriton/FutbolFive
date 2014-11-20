@@ -60,6 +60,8 @@
 		<div class="main_content">
 			<div class="header">
 				<h5>PARTIDOS ORGANIZADOS</h5>
+                                <div class="hit"><a href="/FutbolFive/Actividad.jsp">Regresar Actividad</a>
+				</div>
 				
 			</div>
 			

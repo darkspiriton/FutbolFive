@@ -20,13 +20,19 @@ public class SingletonFecha {
     public boolean validarFecha(String fecha){
         boolean valido=false;        
         String diaActual = diaAux.getFechaActual(); 
-        if(fecha.length()==10){
-            int i=diaAux.diferenciasDeFechas(diaAux.deStringToDate(diaActual), diaAux.deStringToDate(fecha));
-                if (i>=0 && i<=7){
-                    valido=true;
-                }
-        }
-        int i=diaAux.diferenciasDeFechas(diaAux.deStringToDate(diaActual), diaAux.deStringToDate(fecha));
+        
+            
+                try {   
+                    int i=diaAux.diferenciasDeFechas(diaAux.deStringToDate(diaActual), diaAux.deStringToDate(fecha));
+                    if (i>=0 && i<=7){
+                        valido=true;
+                    }
+                } catch(NullPointerException nfe){
+                     return valido;
+                } 
+        
+            
+        
         return valido;
     }
     
