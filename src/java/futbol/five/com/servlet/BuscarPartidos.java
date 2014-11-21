@@ -45,6 +45,7 @@ public class BuscarPartidos extends HttpServlet {
                             SingletonPartidos PartidosDisponibles = SingletonPartidos.getPartidos();                            
                             ses.setAttribute("listaPartidos",PartidosDisponibles.buscarPartidosSingleton(fecha, dia)); 
                             ses.removeAttribute("fechaInvalida");
+                            ses.removeAttribute("ESTADO_LISTA");
                             RequestDispatcher rd;  
                             rd = request.getRequestDispatcher("/verPartidos.jsp");
                             rd.forward(request, response);

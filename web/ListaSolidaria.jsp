@@ -16,6 +16,7 @@
 	<title>Futbol 5</title>
 	<link rel="stylesheet" href="css/estilos.css"/>
 	<link rel="stylesheet" href="css/normalize.css"/>
+        <link rel="stylesheet" href="css/bootstrap.min.css"/>
 		
 	
 </head>
@@ -59,51 +60,40 @@
 	<div class="container">
 		<div class="main_content">
 			<div class="header">
-				<h5>PARTIDOS ORGANIZADOS</h5>
-				<div class="hit"><a href="/FutbolFive/Actividad.jsp">Regresar Actividadd</a>
+				<h5>COMPROMISOS A ASISTIR - LISTA ESTANDAR		
+				<div class="hit"><a href="/FutbolFive/Actividad.jsp">Regresar Actividad</a>
 				</div>
 			</div>
 			
                         
 			<section class="partidos">
 
-                <% if (lsolidaria!= null ) { %>                   
+                <% if (lsolidaria!= null ) { %>  
+                    <table class="table table-bordered">
+                                    <tr>
+                                     <td class="active">N°</td>
+                                     <td class="active">Nick</td>
+                                     <td class="active">Nombre</td>
+                                     <td class="active">N° Telefono</td>
+                                     <td class="active">Correo</td>                                        
+                                    </tr>
+                
                     <%for (int i=0; i < lsolidaria.size(); i++ ) {Usuario o = (Usuario)lsolidaria.get(i);%>
 
-				<article class="partido">
-					<div class="descripcion">
-						<figure class="imagen">
-							<img src="imagenes/foto.png" />
-						</figure>
-						<div class="detalles">
-							
-							<p class="autor">
-                                                             <span class="nombreAutor"><%= o.getUser() %></span>
-							     <span class="nombreAutor"><%= o.getNombre() %></span>
-                                                             <span class="nombreAutor"><%= o.getApellido() %></span>
-                                                             <span class="nombreAutor"><%= o.getnTelefono() %></span>
-                                                             <span class="nombreAutor"><%= o.getCorreo() %></span>
-                                                            
-							</p>
-							
-						</div>
-					</div>
-                                                        <div class="acciones">
-					
-				
-                
-				 </article>
-                             <%} %><% }else { %>
-                	<h5>NO TIENES PARTIDOS ORGANIZADOS</h5>
+				<tr>
+                                     <td class="success"><%=i+1%></td>
+                                     <td ><%= o.getUser() %></td>
+                                     <td ><%= o.getNombre() %> <%= o.getApellido() %></td>
+                                     <td ><%= o.getnTelefono() %></td>
+                                     <td ><%= o.getCorreo() %></td>                                        
+                                    </tr>
+
+                                
+                             <%} %></table><% }else { %>
+                            <h5>NO HAY PERSONAS INSCRITAS</h5>
                         <%}%>
 
 			</section>
-
-                        
-                        <div class="header">
-				<h5>COMPROMISOS A ASISTIR - LISTA ESTANDAR</h5>
-				
-			</div>
 
                         
                         

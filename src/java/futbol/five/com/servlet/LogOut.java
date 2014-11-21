@@ -25,6 +25,23 @@ public class LogOut extends HttpServlet {
         HttpSession ses = request.getSession(true);
         ses.removeAttribute("idUser");
         ses.removeAttribute("idAdmin");
+        ses.removeAttribute("organizado");
+        ses.removeAttribute("compromisos");
+        ses.removeAttribute("solidarias");
+        ses.removeAttribute("pagado");
+        ses.removeAttribute("lestandar");
+        ses.removeAttribute("lsolidaria");
+        ses.removeAttribute("listaCanchas");
+        ses.removeAttribute("fechaInvalida");
+        ses.removeAttribute("fechaPartido");
+        ses.removeAttribute("ERROR_LOGIN");
+        ses.removeAttribute("LOGIN_INVALIDO_ADMINISTRADOR");
+        ses.removeAttribute("status");
+        ses.removeAttribute("ERROR_REGISTRO");
+        ses.removeAttribute("detallePartido");
+        ses.removeAttribute("listaPartidos");
+        ses.removeAttribute("ESTADO_LISTA");
+        ses.removeAttribute("pagado");
                
         RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
 			rd.forward(request, response);

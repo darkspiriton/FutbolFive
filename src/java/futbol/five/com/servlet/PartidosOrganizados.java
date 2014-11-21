@@ -37,7 +37,9 @@ public class PartidosOrganizados extends HttpServlet {
         HttpSession ses = request.getSession();
         
         
-        
+        ses.removeAttribute("pagado");
+        ses.removeAttribute("ESTADO_LISTA");
+        ses.removeAttribute("listaCanchas");
         ses.setAttribute("organizado", organizados.getPartidosOrganizados(iduser) ); 
         ses.setAttribute("compromisos",organizados.getCompromisosEstandar(iduser)); 
         ses.setAttribute("solidarias",organizados.getCompromisosSolidarias(iduser));

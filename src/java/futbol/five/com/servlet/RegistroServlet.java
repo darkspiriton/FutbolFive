@@ -36,16 +36,8 @@ public class RegistroServlet extends HttpServlet {
                    if(gestor.validarNumeroTelefono(ntelefono)==true){
                         ses.removeAttribute("ERROR_LOGIN");
                         ses.removeAttribute("ERROR_REGISTRO");
-                        try {
-                            gestor.registrarUsuario(user, nombre, apellido, correo, proveedor, ntelefono, pass1, fechaN);
-                            throw new MySQLIntegrityConstraintViolationException();
-                        } catch (MySQLIntegrityConstraintViolationException ex) {
-                                 ses.setAttribute("ERROR_REGISTRO", "El usuariio ya existe!!!!!");
-                                RequestDispatcher rd = request.getRequestDispatcher("/registro.jsp");
-                                rd.forward(request, response);
-                        }
-                        
-                        
+                        gestor.registrarUsuario(user, nombre, apellido, correo, proveedor, ntelefono, pass1, fechaN);
+
                         RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
                         rd.forward(request, response);
                    }else{

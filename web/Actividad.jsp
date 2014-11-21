@@ -90,8 +90,8 @@
 					<div class="registro">
                                             <a href="ListaE?listaE=<%=o.getListaE()%>" class="inscribirse">ListaEstandar</a>
                                             <a href="ListaS?listaS=<%=o.getListaS()%>" class="detalle">ListaSolidaria</a>
-                                            <a href="RealizarPago?organizador=<%=o.getOrganizador()%>&cancha=<%=o.getCodCancha()%>&horario=<%=o.getCodHorario()%>&codPago=<%=o.getListaE()%>&ListaEs=<%=o.getListaE()%>&ListaSo=<%=o.getListaS()%>&fecha=<%=o.getFecha()%>" class="inscribirse">Realizar Pago</a>
-                                            <a href="CancelarPartido?fecha=<%=o.getFecha()%>&organizador=<%=o.getOrganizador()%>&cancha=<%=o.getCodCancha()%>&horario=<%=o.getCodHorario()%>&ListaEs=<%=o.getListaE()%>&ListaSo=<%=o.getListaS()%>&codPago=<%=o.getCodPago()%>" class="inscribirse">Cancelar</a>
+                                            <a href="RealizarPago?organizador=<%=o.getOrganizador()%>&cancha=<%=o.getCodCancha()%>&horario=<%=o.getCodHorario()%>&codPago=<%=o.getListaE()%>&ListaEs=<%=o.getListaE()%>&ListaSo=<%=o.getListaS()%>&fecha=<%=o.getFecha()%>" class="pagar">Realizar Pago</a>
+                                            <a href="CancelarPartido?fecha=<%=o.getFecha()%>&organizador=<%=o.getOrganizador()%>&cancha=<%=o.getCodCancha()%>&horario=<%=o.getCodHorario()%>&ListaEs=<%=o.getListaE()%>&ListaSo=<%=o.getListaS()%>&codPago=<%=o.getCodPago()%>" class="cancelar">Cancelar</a>
                                             
                                         </div>
 				

@@ -35,14 +35,8 @@ public class RegistroPartido extends HttpServlet {
         ses.removeAttribute("listaCanchas");
         
         Singleton gestor = Singleton.getSingleton();
-        try {   
-                ses.setAttribute("detallePartido", gestor.getDetallePartido(iduser, cancha, horario,fecha));
-                throw new MySQLIntegrityConstraintViolationException();
-        } catch (MySQLIntegrityConstraintViolationException ex) {
-                //Implementar medida para evitar el error
-                RequestDispatcher rd = request.getRequestDispatcher("/buscarCancha.jsp");
-                rd.forward(request, response);
-        }
+        ses.setAttribute("detallePartido", gestor.getDetallePartido(iduser, cancha, horario,fecha));
+         
          
         RequestDispatcher rd = request.getRequestDispatcher("/registroPartidoDetalle.jsp");
         rd.forward(request, response);

@@ -3,7 +3,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <jsp:include page="/layout/head.jsp"/>
+        <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,  initial-scale=1, maximum-scale=1">
+	<title>Futbol 5</title>
+	<link rel="stylesheet" href="css/estilos.css"/>
+	<link rel="stylesheet" href="css/normalize.css"/>
+	
 </head>
 <body>
     <% if (idUser.equals("") ) { %>
