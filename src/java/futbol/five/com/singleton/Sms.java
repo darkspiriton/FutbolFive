@@ -53,5 +53,9 @@ public class Sms {
             System.out.println("La lista de numeros esta vacio"); 
         }	  
  }
+
+    public void enviarMensaje(List obtenerNumTL) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

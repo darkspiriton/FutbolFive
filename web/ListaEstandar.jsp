@@ -68,7 +68,7 @@
                         
 			<section class="partidos">
 
-                <% if (lsolidaria!= null ) { %>  
+                <% if (lestandar!= null ) { %>  
                     <table class="table table-bordered">
                                     <tr>
                                      <td class="active">N°</td>
@@ -78,7 +78,7 @@
                                      <td class="active">Correo</td>                                        
                                     </tr>
                 
-                    <%for (int i=0; i < lsolidaria.size(); i++ ) {Usuario o = (Usuario)lsolidaria.get(i);%>
+                    <%for (int i=0; i < lestandar.size(); i++ ) {Usuario o = (Usuario)lestandar.get(i);%>
 
 				<tr>
                                      <td class="success"><%=i+1%></td>

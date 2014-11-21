@@ -6,6 +6,7 @@
 
 package futbol.five.com.servlet;
 
+import com.twilio.sdk.TwilioRestException;
 import futbol.five.com.dao.CanchaDAO;
 import futbol.five.com.dao.UsuarioDAO;
 import futbol.five.com.interfaz.CanchaIF;
@@ -13,6 +14,8 @@ import futbol.five.com.interfaz.UsuarioIF;
 import futbol.five.com.singleton.Sms;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -51,10 +54,20 @@ public class RealizarPago extends HttpServlet {
         
         UsuarioIF u = new UsuarioDAO();
         CanchaIF c= new CanchaDAO();
+        
         if (c.verficarListaEstandar(estandar)==false){
             
         
         u.pagarPartido(pago,organizador,canchita,hora,fecha, estandar,solidaria);
+        
+        Sms mensaje = Sms.getSms();
+            try {
+                mensaje.enviarMensaje(c.obtenerNumTL(estandar), "El encuentro se va a realizar");
+            } catch (TwilioRestException ex) {
+                Logger.getLogger(RealizarPago.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        
         HttpSession ses = request.getSession();
     
         ses.setAttribute("pagado","se pagó el partido con éxito");        
@@ -69,6 +82,12 @@ public class RealizarPago extends HttpServlet {
             if(u.compararListas(estandar, solidaria)==true){
                 
                  u.pagarPartido(pago,organizador,canchita,hora,fecha, estandar,solidaria);
+                 Sms mensaje = Sms.getSms();
+                try {
+                    mensaje.enviarMensaje(c.obtenerNumTL(estandar), "El encuentro se va a realizar");
+                } catch (TwilioRestException ex) {
+                    Logger.getLogger(RealizarPago.class.getName()).log(Level.SEVERE, null, ex);
+                }
                  HttpSession ses = request.getSession();
     
                  ses.setAttribute("pagado","se pagó el partido con éxito");        

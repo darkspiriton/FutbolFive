@@ -6,10 +6,15 @@
 
 package futbol.five.com.servlet;
 
+import com.twilio.sdk.TwilioRestException;
 import futbol.five.com.dao.UsuarioDAO;
 import futbol.five.com.interfaz.UsuarioIF;
+import futbol.five.com.singleton.SingletonUsuario;
+import futbol.five.com.singleton.Sms;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,25 +36,25 @@ public class CancelarPartido extends HttpServlet {
    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
+            throws ServletException, IOException {        
           
         String fecha=request.getParameter("fecha");
         String organizador=request.getParameter("organizador");
         String cancha=request.getParameter("cancha");
         String horario=request.getParameter("horario");
-        String ListaEs=request.getParameter("ListaEs");
-        String ListaSo=request.getParameter("ListaSo");        
+        
+        String listaEs=request.getParameter("ListaEs");
+        String listaSo=request.getParameter("ListaSo");        
         String codPago=request.getParameter("codPago");  
-        int codcancha = Integer.parseInt(cancha);
-        int codhorario=Integer.parseInt(horario);
-        int Pago=Integer.parseInt(codPago);
-        int Estand=Integer.parseInt(ListaEs);
-        int solid=Integer.parseInt(ListaSo);
+       
         
-        
-        UsuarioIF u = new UsuarioDAO();
-        u.cancelarPartido(organizador, fecha, codcancha, codhorario,Pago,Estand,solid);
+                
+        SingletonUsuario u = SingletonUsuario.getUsuario();
+        try {
+            u.cancelarPartido(organizador, fecha, cancha, horario, codPago, listaEs, listaSo);
+        } catch (TwilioRestException ex) {
+            Logger.getLogger(CancelarPartido.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         HttpSession ses = request.getSession();
     

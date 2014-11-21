@@ -41,7 +41,7 @@ public class ListarCanchas extends HttpServlet {
                     ses.removeAttribute("fechaInvalida");
                     RequestDispatcher rd;  
                     rd = request.getRequestDispatcher("/buscarCancha.jsp");
-		rd.forward(request, response); 
+                    rd.forward(request, response); 
                 } else {
                     ses.removeAttribute("listaCanchas");
                     ses.removeAttribute("fechaPartido");

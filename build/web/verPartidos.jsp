@@ -79,9 +79,8 @@
 							<img src="imagenes/foto.png" />
 						</figure>
 						<div class="detalles">
-							<h2 class="titulo">
-                                                                <%= p.getOrganizador()%>
-								<%= p.getDescripcion() %>
+							<h2 class="titulo">                                                            
+                                                            <%= p.getDescripcion() %> <span class="orga">Organizado <%= p.getOrganizador()%></span> 
 							</h2>
 							<p class="autor">
 								Direccion: <span class="nombreAutor"><%= p.getDireccion() %></span>
