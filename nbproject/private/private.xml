@@ -3,17 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/web/registro.jsp</file>
-            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/src/java/futbol/five/com/servlet/RegistroServlet.java</file>
-            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/web/buscarCancha.jsp</file>
-            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/web/ListaEstandar.jsp</file>
-            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/web/verPartidos.jsp</file>
-            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/src/java/futbol/five/com/singleton/Singleton.java</file>
-            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/src/java/futbol/five/com/servlet/RegistroPartido.java</file>
-            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/web/Actividad.jsp</file>
-            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/web/registroPartidoDetalle.jsp</file>
-            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/web/ListaSolidaria.jsp</file>
-            <file>file:/E:/StOn/NetBeans%20Proyectos/FutbolFive/src/java/futbol/five/com/dao/UsuarioDAO.java</file>
+            <file>file:/D:/Workspace/FutbolFive/src/java/futbol/five/com/servlet/PartidosOrganizados.java</file>
+            <file>file:/D:/Workspace/FutbolFive/src/java/futbol/five/com/interfaz/UsuarioIF.java</file>
+            <file>file:/D:/Workspace/FutbolFive/web/layout/nav.jsp</file>
+            <file>file:/D:/Workspace/FutbolFive/src/java/futbol/five/com/dao/CanchaDAO.java</file>
+            <file>file:/D:/Workspace/FutbolFive/src/java/futbol/five/com/dao/UsuarioDAO.java</file>
+            <file>file:/D:/Workspace/FutbolFive/web/Actividad.jsp</file>
+            <file>file:/D:/Workspace/FutbolFive/src/java/futbol/five/com/servlet/RealizarPago.java</file>
         </group>
     </open-files>
 </project-private>

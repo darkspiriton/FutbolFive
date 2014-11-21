@@ -818,14 +818,20 @@ public class CanchaDAO implements CanchaIF {
                         
 			while ( rs.next() ) {
                              
-				lorganizado.add( new Partido( rs.getInt(13),
+				lorganizado.add( new Partido( rs.getString(17),
+                                                              rs.getInt(2),
+                                                              rs.getInt(3),
+                                                              rs.getString(1),
+                                                              rs.getInt(13),
                                                               rs.getInt(14),
                                                               rs.getString(4),
                                                               rs.getString(5),
                                                               rs.getString(6),
                                                               rs.getInt(7),
                                                               rs.getInt(8),
-                                                              rs.getString(15)
+                                                              rs.getString(15),
+                                                              rs.getString(12),
+                                                              rs.getInt(9)
                                                               
                                                         ));
                         }
@@ -857,7 +863,10 @@ public class CanchaDAO implements CanchaIF {
 		PreparedStatement pstmt = null;
      
         
-                String sql1="SELECT p.organizador,C.DESCRIPCION,C.DIRECCION,H.DIA,H.HORA_INICIO,H.HORA_FIN\n" +
+                
+                
+                
+                String sql1="SELECT  pg.estado_pago,p.estado_partido,p.lista_estandar,p.lista_solidaria,p.organizador,C.DESCRIPCION,C.DIRECCION,H.DIA,H.HORA_INICIO,H.HORA_FIN\n" +
                             "FROM detalle_lista_estandar dle\n" +
                             "inner join lista_estandar le\n" +
                             "on dle.cod_lista_e=le.cod_lista_e\n" +
@@ -866,7 +875,9 @@ public class CanchaDAO implements CanchaIF {
                             "INNER JOIN  DETALLE_CANCHA_HORARIO D1 ON P.COD_CANCHA=D1.COD_CANCHA AND P.COD_HORARIO=D1.COD_HORARIO\n" +
                             "INNER JOIN HORARIO H ON D1.COD_HORARIO=H.COD_HORARIO\n" +
                             "INNER JOIN CANCHA C ON D1.COD_CANCHA=C.COD_CANCHA\n" +
-                            "where dle.user=? and p.estado_partido='disponible';";
+                            "inner join pago pg on p.cod_pago=pg.cod_pago\n" +
+                            "where dle.user=? and p.estado_partido='disponible' and p.organizador not in(select organizador from partido where organizador=? );";
+                
                 
                 List<Partido> lcompromisos= new <Partido>ArrayList();
                 
@@ -874,18 +885,22 @@ public class CanchaDAO implements CanchaIF {
 			con = mysql.getConnection();
 			pstmt = con.prepareStatement(sql1);		
 			pstmt.setString(1,iduser);  
-                      
+                        pstmt.setString(2,iduser);
                         
 			rs = pstmt.executeQuery();
                         
 			while ( rs.next() ) {
                              
 				lcompromisos.add( new Partido( rs.getString(1),
-                                                              rs.getString(2),
-                                                              rs.getString(3),
-                                                              rs.getString(4),
-                                                              rs.getInt(5),
-                                                              rs.getInt(6)
+                                                               rs.getString(2),
+                                                               rs.getInt(3),
+                                                               rs.getInt(4),
+                                                               rs.getString(5),
+                                                               rs.getString(6),
+                                                               rs.getString(7),
+                                                               rs.getString(8),
+                                                               rs.getInt(9),
+                                                               rs.getInt(10)
                                                               
                                                         ));
                         }
@@ -918,7 +933,7 @@ public class CanchaDAO implements CanchaIF {
 		PreparedStatement pstmt = null;
      
         
-                String sql1="SELECT p.organizador,C.DESCRIPCION,C.DIRECCION,H.DIA,H.HORA_INICIO,H.HORA_FIN\n" +
+                String sql1="SELECT pg.estado_pago,p.estado_partido,p.lista_solidaria,p.lista_estandar, p.organizador,C.DESCRIPCION,C.DIRECCION,H.DIA,H.HORA_INICIO,H.HORA_FIN\n" +
                             "FROM detalle_lista_solidaria dls\n" +
                             "inner join lista_solidaria ls\n" +
                             "on dls.cod_lista_s=ls.cod_lista_s\n" +
@@ -927,6 +942,7 @@ public class CanchaDAO implements CanchaIF {
                             "INNER JOIN  DETALLE_CANCHA_HORARIO D1 ON P.COD_CANCHA=D1.COD_CANCHA AND P.COD_HORARIO=D1.COD_HORARIO\n" +
                             "INNER JOIN HORARIO H ON D1.COD_HORARIO=H.COD_HORARIO\n" +
                             "INNER JOIN CANCHA C ON D1.COD_CANCHA=C.COD_CANCHA\n" +
+                            "inner join pago pg on p.cod_pago=pg.cod_pago\n" +
                             "where dls.user=? and p.estado_partido='disponible';";
                 
                 List<Partido> lcompromisos= new <Partido>ArrayList();
@@ -941,12 +957,16 @@ public class CanchaDAO implements CanchaIF {
                         
 			while ( rs.next() ) {
                              
-				lcompromisos.add( new Partido( rs.getString(1),
+				lcompromisos.add( new Partido(rs.getString(1),
                                                               rs.getString(2),
-                                                              rs.getString(3),
-                                                              rs.getString(4),
-                                                              rs.getInt(5),
-                                                              rs.getInt(6)
+                                                               rs.getInt(3),
+                                                               rs.getInt(4),
+                                                               rs.getString(5),
+                                                              rs.getString(6),
+                                                              rs.getString(7),
+                                                              rs.getString(8),
+                                                              rs.getInt(9),
+                                                              rs.getInt(10)
                                                               
                                                         ));
                         }
@@ -977,33 +997,46 @@ public class CanchaDAO implements CanchaIF {
     public List<Partido> BuscarPartidos(String fecha, String dia) {
           Connection con = null;
 		ResultSet rs = null;
+                ResultSet rs2 = null;
 		PreparedStatement pstmt = null;
+                
+                PreparedStatement pstmt2=null;
      
         
-                String sql1="SELECT c1.descripcion,c1.direccion,h1.dia,h1.hora_inicio,h1.hora_fin\n" +
+                String sql1="SELECT p.organizador,c1.descripcion,c1.direccion,h1.dia,h1.hora_inicio,h1.hora_fin\n" +
                             "FROM cancha c1 inner join detalle_cancha_horario d1 on c1.cod_cancha=d1.cod_cancha\n" +
                             "inner join horario h1 on d1.cod_horario=h1.cod_horario\n" +
+                            "inner join partido p on d1.cod_horario=p.cod_horario and d1.cod_cancha=p.cod_cancha\n" +
                             "where h1.dia=? and (c1.cod_cancha,h1.cod_horario)\n" +
-                            "in (SELECT cod_cancha,cod_horario FROM partido where estado_partido='disponible' and fecha=?);";
+                            "in (SELECT cod_cancha,cod_horario FROM partido where estado_partido='disponible' and fecha=?);\n";
                 
+                String sql3="select lista_estandar,lista_solidaria from partido\n" +
+                            "where estado_partido='disponible' and fecha=?;";
                 List<Partido> ldisponibles= new <Partido>ArrayList();
                 
                 try {
 			con = mysql.getConnection();
-			pstmt = con.prepareStatement(sql1);		
+			pstmt = con.prepareStatement(sql1);
+                        pstmt2=con.prepareStatement(sql3);
 			pstmt.setString(1,dia);  
                         pstmt.setString(2,fecha);
+                        pstmt2.setString(1,fecha);
                         String orga="nulo";
 			rs = pstmt.executeQuery();
-                        
+                        rs2=pstmt2.executeQuery();
 			while ( rs.next() ) {
-                             
-				ldisponibles.add( new Partido( orga,
-                                                              rs.getString(1),
+                                rs2.next();
+				ldisponibles.add( new Partido( orga,1,2,
+                                                               rs.getString(1),
+                                                               rs2.getInt(1),
+                                                               rs2.getInt(2),
                                                               rs.getString(2),
                                                               rs.getString(3),
-                                                              rs.getInt(4),
-                                                              rs.getInt(5)
+                                                              rs.getString(4),
+                                                              rs.getInt(5),
+                                                              rs.getInt(6),
+                                                              orga,
+                                                              orga,2
                                                               
                                                         ));
                                 
@@ -1014,7 +1047,7 @@ public class CanchaDAO implements CanchaIF {
                                 
                                 
                         }
-                        
+                        rs2.next();
                         
 			
 		} catch (SQLException e) {

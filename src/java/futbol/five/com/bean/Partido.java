@@ -53,7 +53,12 @@ public class Partido {
         this.fecha = fecha;
     }
 
-    public Partido(int listaE,int listaS,String descripcion, String direccion, String dia, int horaInicio, int horaFin, String estadoPartido) {
+    public Partido(String fecha,int codCancha,int codHorario, String organizador,int listaE,int listaS,String descripcion, String direccion, String dia, int horaInicio, int horaFin, String estadoPartido,String estadoPago,int codPago) {
+        
+        this.fecha=fecha;
+        this.codCancha=codCancha;
+        this.codHorario=codHorario;
+        this.organizador=organizador;
         this.listaE= listaE;
         this.listaS= listaS;
         this.descripcion = descripcion;
@@ -62,9 +67,19 @@ public class Partido {
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.estadoPartido = estadoPartido;
+        this.estadoPago=estadoPago;
+        this.codPago=codPago;
     }
 
-    public Partido(String organizador, String descripcion, String direccion, String dia, int horaInicio, int horaFin) {
+    
+
+   
+    public Partido(String estadoPago,String estadoPartido,int ListaE,int ListaS,String organizador, String descripcion, String direccion, String dia, int horaInicio, int horaFin) {
+       
+        this.estadoPago=estadoPago;
+        this.estadoPartido=estadoPartido;
+        this.listaE=ListaE;
+        this.listaS=ListaS;
         this.organizador = organizador;
         this.descripcion = descripcion;
         this.direccion = direccion;

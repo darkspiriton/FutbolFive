@@ -6,12 +6,10 @@
 
 package futbol.five.com.servlet;
 
-
-
-import futbol.five.com.bean.Partido;
-import futbol.five.com.singleton.SingletonPartidos;
+import futbol.five.com.dao.UsuarioDAO;
+import futbol.five.com.interfaz.UsuarioIF;
 import java.io.IOException;
-import java.util.List;
+import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,33 +18,41 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-@WebServlet(name = "PartidosOrganizados", urlPatterns = {"/PartidosOrganizados"})
-public class PartidosOrganizados extends HttpServlet {
+/**
+ *
+ * @author Samuel
+ */
+@WebServlet(name = "SalirListaSolidaria", urlPatterns = {"/SalirListaSolidaria"})
+public class SalirListaSolidaria extends HttpServlet {
 
  
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-        String iduser = request.getParameter("idUser");
         
-        SingletonPartidos organizados = SingletonPartidos.getPartidos();
-           
+        
+        String solidaria=request.getParameter("listaS");
+        String usuario=request.getParameter("usuario");
+        
+        int solid = Integer.parseInt(solidaria);
+        
+        UsuarioIF u = new UsuarioDAO();
+        u.SalirSolidaria(usuario, solid);
         HttpSession ses = request.getSession();
-        
-        
-        
-        ses.setAttribute("organizado", organizados.getPartidosOrganizados(iduser) ); 
-        ses.setAttribute("compromisos",organizados.getCompromisosEstandar(iduser)); 
-        ses.setAttribute("solidarias",organizados.getCompromisosSolidarias(iduser));
+    
+        ses.setAttribute("borrado","se retiro del partido con exito");        
         RequestDispatcher rd;  
         rd = request.getRequestDispatcher("/Actividad.jsp");
-        rd.forward(request, response); 
+        rd.forward(request, response);
+        
+        
+        
         
     }
 
-
     
+
+   
+   
+
 }

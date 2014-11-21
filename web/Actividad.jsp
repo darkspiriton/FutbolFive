@@ -11,6 +11,7 @@
 <jsp:useBean id="organizado" class="java.util.ArrayList" scope="session"/>
 <jsp:useBean id="compromisos" class="java.util.ArrayList" scope="session"/>
 <jsp:useBean id="solidarias" class="java.util.ArrayList" scope="session"/>
+<jsp:useBean id="pagado" class="java.lang.String" scope="session"/>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -50,16 +51,18 @@
 	</header>
 
 	<nav>
-		<jsp:include page="/layout/nav.jsp"/>
+            <jsp:include page="/layout/nav.jsp"/>
 	</nav>
         
 	<div class="container">
 		<div class="main_content">
 			<div class="header">
 				<h5>PARTIDOS ORGANIZADOS</h5>
-				
+                                
 			</div>
 			
+                    
+                         <%=pagado%>
                         
 			<section class="partidos">
 
@@ -79,15 +82,16 @@
 								Direccion: <span class="nombreAutor"><%= o.getDireccion() %></span>
 							</p>
 							<a href="#" class="horario">Horario: <%= o.getDia()%>  <%= o.getHoraInicio() %> - <%= o.getHoraFin() %></a>
-							<p class="fecha"><strong></strong>Disponible</p>
+							<p class="fecha"><strong></strong>Estado Partido: <%= o.getEstadoPartido()%></p>
+                                                        <p class="fecha"><strong></strong>Estado Pago: <%= o.getEstadoPago()%></p>
 						</div>
 					</div>
                                                         <div class="acciones">
 					<div class="registro">
                                             <a href="ListaE?listaE=<%=o.getListaE()%>" class="inscribirse">ListaEstandar</a>
                                             <a href="ListaS?listaS=<%=o.getListaS()%>" class="detalle">ListaSolidaria</a>
-                                            <a href="" class="inscribirse">Realizar Pago</a>
-                                            <a href="" class="inscribirse">Cancelar</a>
+                                            <a href="RealizarPago?organizador=<%=o.getOrganizador()%>&cancha=<%=o.getCodCancha()%>&horario=<%=o.getCodHorario()%>&codPago=<%=o.getListaE()%>&ListaEs=<%=o.getListaE()%>&ListaSo=<%=o.getListaS()%>&fecha=<%=o.getFecha()%>" class="inscribirse">Realizar Pago</a>
+                                            <a href="CancelarPartido?fecha=<%=o.getFecha()%>&organizador=<%=o.getOrganizador()%>&cancha=<%=o.getCodCancha()%>&horario=<%=o.getCodHorario()%>&ListaEs=<%=o.getListaE()%>&ListaSo=<%=o.getListaS()%>&codPago=<%=o.getCodPago()%>" class="inscribirse">Cancelar</a>
                                             
                                         </div>
 				
@@ -126,10 +130,15 @@
 								Direccion: <span class="nombreAutor"><%= o.getDireccion() %></span>
 							</p>
 							<a href="#" class="horario">Horario: <%= o.getDia()%>  <%= o.getHoraInicio()%> - <%= o.getHoraFin() %></a>
-							<p class="fecha"><strong></strong>Disponible</p>
+							<p class="fecha"><strong></strong>Estado partido :<%=o.getEstadoPartido()%></p>
+                                                        <p class="fecha"><strong></strong>Estado pago :<%=o.getEstadoPago()%></p>
 						</div>
 					</div>
-                                                        <div class="acciones">
+                                                         <div class="acciones">
+					<div class="registro">
+                                            <a href="SalirListaEstandar?usuario=<%=idUser%>&listaE=<%=o.getListaE()%>" class="inscribirse">Salir del Partido</a>
+                                            
+                                        </div>
                                     
 				
 					
@@ -169,11 +178,16 @@
 								Direccion: <span class="nombreAutor"><%= o.getDireccion() %></span>
 							</p>
 							<a href="#" class="horario">Horario: <%= o.getDia()%>  <%= o.getHoraInicio()%> - <%= o.getHoraFin() %></a>
-							<p class="fecha"><strong></strong>Disponible</p>
+							<p class="fecha"><strong></strong>Estado Partido: <%=o.getEstadoPartido()%></p>
+                                                        <p class="fecha"><strong></strong>Estado Pago: <%=o.getEstadoPago()%></p>
 						</div>
 					</div>
                                         
-				
+				<div class="acciones">
+					<div class="registro">
+                                            <a href="SalirListaSolidaria?usuario=<%=idUser%>&listaS=<%=o.getListaS()%>" class="inscribirse">Salir del Partido</a>
+                                            
+                                        </div>
 					
 				
                 

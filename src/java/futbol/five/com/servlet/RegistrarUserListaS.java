@@ -26,7 +26,7 @@ public class RegistrarUserListaS extends HttpServlet {
             throws ServletException, IOException {
         HttpSession ses = request.getSession();
         String idUser = request.getParameter("idUser");
-        String codLS = request.getParameter("");
+        String codLS = request.getParameter("ListaS");
         
         //detalle_lista_solidaria
         //crear un metodo para verificar si hay espacio en la lista codLS debe regresar un boolean

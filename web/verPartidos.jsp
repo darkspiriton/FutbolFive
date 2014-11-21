@@ -80,6 +80,7 @@
 						</figure>
 						<div class="detalles">
 							<h2 class="titulo">
+                                                                <%= p.getOrganizador()%>
 								<%= p.getDescripcion() %>
 							</h2>
 							<p class="autor">
@@ -92,8 +93,8 @@
                                         <div class="acciones">
                                             
 						<div class="registro">
-                                                    <a href="RegistrarUserListaE?fecha=?idUser=<%=idUser%>" class="inscribirse">Lista Estandar</a>
-                                                    <a href="RegistrarUserListaS?idUser=<%=idUser%>" class="inscribirse">Lista Solidaria</a>
+                                                    <a href="RegistrarUserListaE?idUser=<%=idUser%>&ListaE=<%=p.getListaE()%>" class="inscribirse">Lista Estandar</a>
+                                                    <a href="RegistrarUserListaS?idUser=<%=idUser%>&ListaS=<%=p.getListaS()%>" class="inscribirse">Lista Solidaria</a>
 						</div>
 						
 					</div>            
